@@ -2,7 +2,7 @@
 
 Linux 以太网口与 LLDP 拓扑工具，Python 3.9+ 标准库实现，无 pip 依赖。
 控制端需要 OpenSSH；节点需要 Python 3.9+、已有 lldpd 服务和可访问的 lldpcli。
-只读查询，不安装软件、不启动服务、不修改网络配置。
+只读查询，不安装软件、不启动服务、不修改网络配置。默认只选择 Mellanox 网卡（PCI 0x15b3）。
 
 ## 拓扑采集
 
@@ -71,3 +71,31 @@ python3 -m compileall -q etherlink
 ![拓扑示例](examples/demo.svg)
 
 保存的数据样例见 examples/demo.json。
+
+## 网卡厂商选择与可交互拓扑
+
+```bash
+./etherlink-cli 'node[001-016]' --html topology.html --svg overview.svg
+./etherlink-cli 'node[001-016]' --vendor mellanox,intel
+./etherlink-cli 'node[001-016]' --vendor mellanox --vendor broadcom
+./etherlink-cli 'node[001-016]' --vendor all
+./etherlink-cli 'node[001-016]' --vendor all --driver mlx5_core
+./etherlink-cli --input links.json --vendor all --html topology.html
+```
+
+--vendor 支持逗号分隔和重复参数，也接受 PCI 厂商 ID，例如 15b3、0x8086。
+预设名称：mellanox（nvidia 为同一以太网厂商 ID 的别名）、intel、broadcom、realtek、amazon。
+all 取消厂商限制；默认仍排除虚拟设备，需要时另加 --include-virtual。
+--driver 为可选驱动白名单，可重复。网卡型号从节点已有 pci.ids 读取，无该数据库时
+仍保留 vendor_id、device_id 和驱动，不根据网口名字猜型号。
+
+JSON/CSV/SVG/HTML 均使用筛选后的网口。没有匹配网卡的节点仍保留。
+若以后需要切换厂商，请先用 --vendor all 保存完整 JSON；
+筛选后的文件无法恢复被排除的网口。旧 JSON 无厂商元数据时，请重新采集，
+或使用 --vendor all 绕过筛选，不把未知硬件当成 Mellanox。
+
+多节点 SVG 是按相同邻居集合分组的总览，连线表示聚合连接数，不推断交换机互联。
+单节点 SVG 显示精确端口接线。--html 输出无需服务器和外部资源的单文件报告：
+总览中的节点可点击，明细可展开查看端口接线图和硬件字段，搜索支持节点、网口、交换机和型号。
+UP 只表示本地链路状态；彩色连线按邻居区分，不代表 LLDP 一定可用；邻居为空仍保留，UP 但无邻居的节点以黄色强调。
+PNG 预览可用已有 ImageMagick 将 SVG 转换，核心工具无需安装它。

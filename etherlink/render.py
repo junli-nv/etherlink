@@ -16,6 +16,16 @@ def rows(report):
                     "hostname": node["hostname"],
                     "interface": port["interface"],
                     "mac": port["mac"],
+                    **{
+                        key: port.get(key, "")
+                        for key in (
+                            "vendor_id",
+                            "device_id",
+                            "vendor_name",
+                            "model",
+                            "driver",
+                        )
+                    },
                     "operstate": port["operstate"],
                     "carrier": port["carrier"],
                     "speed_mbps": port["speed_mbps"],
@@ -109,6 +119,11 @@ def write_csv(report, path):
         "hostname",
         "interface",
         "mac",
+        "vendor_id",
+        "device_id",
+        "vendor_name",
+        "model",
+        "driver",
         "operstate",
         "carrier",
         "speed_mbps",
@@ -131,95 +146,8 @@ def write_csv(report, path):
 
 
 def svg(report):
-    from html import escape
+    from .atlas import overview, node_diagram
 
-    all_rows = list(rows(report))
-    groups = defaultdict(list)
-    for row in all_rows:
-        if row["switch"] or row["chassis_id"]:
-            groups[identity(row)].append(row)
-    longest = max(
-        [40]
-        + [len(clean(r["node"]) + clean(r["interface"]) + status(r)) for r in all_rows]
-    )
-    box_width = max(430, longest * 8 + 30)
-    right = box_width + 420
-    width = right + box_width + 30
-    switch_slots, node_slots, boxes = {}, {}, []
-    sy = ny = 100
-    for key, group in sorted(groups.items()):
-        height = 70 + 32 * len(group)
-        first = group[0]
-        labels = [
-            first["switch"] or first["chassis_id"],
-            first["chassis_id"] + " " + first["management_ips"],
-        ]
-        for index, row in enumerate(group):
-            switch_slots[id(row)] = sy + 82 + index * 32
-            labels.append(row["switch_port"] or "(port ID absent)")
-        boxes.append((20, sy, height, labels, "#e6f1ff"))
-        sy += height + 30
-    by_node = defaultdict(list)
-    for row in all_rows:
-        by_node[row["node"]].append(row)
-    for node in report["nodes"]:
-        group = by_node[node["node"]]
-        height = 70 + 32 * max(1, len(group))
-        labels = [node["node"], node["hostname"]]
-        for index, row in enumerate(group):
-            node_slots[id(row)] = ny + 82 + index * 32
-            labels.append(
-                row["interface"]
-                + status(row)
-                + (
-                    " LLDP: empty"
-                    if not row["switch"] and not row["chassis_id"]
-                    else ""
-                )
-            )
-        if not group:
-            labels.append("No interfaces collected")
-        boxes.append((right, ny, height, labels, "#eef8ef"))
-        ny += height + 30
-    warnings = [
-        n["node"] + ": " + error for n in report["nodes"] for error in n["errors"]
-    ]
-    height = max(sy, ny) + 50 + 24 * len(warnings)
-    out = [
-        f'<svg xmlns="http://www.w3.org/2000/svg" width="{width}" height="{height}" viewBox="0 0 {width} {height}">',
-        '<rect width="100%" height="100%" fill="white"/>',
-        '<g font-family="monospace" font-size="13">',
-    ]
-
-    def text(x, y, value, color="#16263b"):
-        out.append(
-            f'<text x="{x}" y="{y}" fill="{color}">{escape(clean(value))}</text>'
-        )
-
-    text(20, 28, "Etherlink — Ethernet / LLDP topology")
-    text(20, 50, report["collected_at"] + " | empty LLDP does not mean unplugged")
-    text(20, 78, "Advertised neighbors")
-    text(right, 78, "Nodes / Ethernet interfaces")
-    for row in all_rows:
-        if id(row) not in switch_slots:
-            continue
-        a, b = switch_slots[id(row)] - 4, node_slots[id(row)] - 4
-        color = "#27834a" if row["carrier"] == "1" else "#a36b28"
-        x1 = 20 + box_width
-        out.append(
-            f'<path d="M{x1},{a} C{x1 + 140},{a} {right - 140},{b} {right},{b}" fill="none" stroke="{color}" stroke-width="1.5"/>'
-        )
-    for x, y, h, labels, color in boxes:
-        out.append(
-            f'<rect x="{x}" y="{y}" width="{box_width}" height="{h}" rx="8" fill="{color}" stroke="#94a6b8"/>'
-        )
-        for index, label in enumerate(labels):
-            text(
-                x + 12,
-                y + (24 if index == 0 else 48 if index == 1 else 82 + (index - 2) * 32),
-                label,
-            )
-    for index, warning in enumerate(warnings):
-        text(20, max(sy, ny) + 22 + index * 24, warning, "#ad291e")
-    out.append("</g></svg>")
-    return "\n".join(out)
+    if len(report["nodes"]) == 1:
+        return node_diagram(report["nodes"][0])
+    return overview(report)

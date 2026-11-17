@@ -1,24 +1,105 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="1310" height="446" viewBox="0 0 1310 446">
-<rect width="100%" height="100%" fill="white"/>
-<g font-family="monospace" font-size="13">
-<text x="20" y="28" fill="#16263b">Etherlink — Ethernet / LLDP topology</text>
-<text x="20" y="50" fill="#16263b">Synthetic example (not live infrastructure) | empty LLDP does not mean unplugged</text>
-<text x="20" y="78" fill="#16263b">Advertised neighbors</text>
-<text x="850" y="78" fill="#16263b">Nodes / Ethernet interfaces</text>
-<path d="M450,178 C590,178 710,178 850,178" fill="none" stroke="#27834a" stroke-width="1.5"/>
-<path d="M450,210 C590,210 710,310 850,310" fill="none" stroke="#27834a" stroke-width="1.5"/>
-<rect x="20" y="100" width="430" height="134" rx="8" fill="#e6f1ff" stroke="#94a6b8"/>
-<text x="32" y="124" fill="#16263b">switch-a</text>
-<text x="32" y="148" fill="#16263b">02:00:00:00:00:01 192.0.2.1</text>
-<text x="32" y="182" fill="#16263b">Ethernet1/1</text>
-<text x="32" y="214" fill="#16263b">Ethernet1/2</text>
-<rect x="850" y="100" width="430" height="102" rx="8" fill="#eef8ef" stroke="#94a6b8"/>
-<text x="862" y="124" fill="#16263b">n01</text>
-<text x="862" y="148" fill="#16263b">n01</text>
-<text x="862" y="182" fill="#16263b">eth0 [up 25000Mb/s]</text>
-<rect x="850" y="232" width="430" height="134" rx="8" fill="#eef8ef" stroke="#94a6b8"/>
-<text x="862" y="256" fill="#16263b">n02</text>
-<text x="862" y="280" fill="#16263b">n02</text>
-<text x="862" y="314" fill="#16263b">eth0 [up 25000Mb/s]</text>
-<text x="862" y="346" fill="#16263b">eth1 [down speed=?] LLDP: empty</text>
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="920" viewBox="0 0 1600 920">
+<rect width="100%" height="100%" fill="#f4f7fc"/>
+<g font-family="DejaVu Sans,Arial,sans-serif">
+<text x="32" y="48" font-size="14" fill="#4f6381" font-weight="700">ETHERNET / LLDP</text>
+<text x="32" y="88" font-size="32" fill="#172b4d" font-weight="700">Observed network topology</text>
+<text x="32" y="116" font-size="13" fill="#64748b" font-weight="400">node10,node[01-09] | SYNTHETIC EXAMPLE / NOT LIVE INFRASTRUCTURE</text>
+<rect x="32" y="140" width="364" height="82" rx="12" fill="white" stroke="#dbe3ef"/>
+<text x="50" y="175" font-size="28" fill="#172b4d" font-weight="700">10</text>
+<text x="50" y="202" font-size="12" fill="#64748b" font-weight="600">NODES SCANNED</text>
+<rect x="420" y="140" width="364" height="82" rx="12" fill="white" stroke="#dbe3ef"/>
+<text x="438" y="175" font-size="28" fill="#172b4d" font-weight="700">4</text>
+<text x="438" y="202" font-size="12" fill="#64748b" font-weight="600">NEIGHBOR DEVICES</text>
+<rect x="808" y="140" width="364" height="82" rx="12" fill="white" stroke="#dbe3ef"/>
+<text x="826" y="175" font-size="28" fill="#172b4d" font-weight="700">32</text>
+<text x="826" y="202" font-size="12" fill="#64748b" font-weight="600">LLDP LINKS</text>
+<rect x="1196" y="140" width="364" height="82" rx="12" fill="white" stroke="#dbe3ef"/>
+<text x="1214" y="175" font-size="28" fill="#172b4d" font-weight="700">8</text>
+<text x="1214" y="202" font-size="12" fill="#64748b" font-weight="600">PORTS WITHOUT LLDP</text>
+<rect x="32" y="246" width="744" height="318" rx="12" fill="white" stroke="#dbe3ef"/>
+<text x="52" y="278" font-size="18" fill="#172b4d" font-weight="700">Neighbor group / 2 devices</text>
+<text x="52" y="301" font-size="12" fill="#64748b" font-weight="400">4 nodes | same observed neighbor set</text>
+<rect x="52" y="318" width="336" height="76" rx="8" fill="#f8fbff" stroke="#2563eb"/>
+<text x="64" y="342" font-size="12" fill="#2563eb" font-weight="700">example-leaf-1-1</text>
+<text x="64" y="363" font-size="11" fill="#64748b" font-weight="400">192.0.2.1</text>
+<text x="64" y="382" font-size="11" fill="#2563eb" font-weight="400">8 observed port links to this group</text>
+<rect x="404" y="318" width="336" height="76" rx="8" fill="#f8fbff" stroke="#0d9488"/>
+<text x="416" y="342" font-size="12" fill="#0d9488" font-weight="700">example-leaf-1-2</text>
+<text x="416" y="363" font-size="11" fill="#64748b" font-weight="400">192.0.2.2</text>
+<text x="416" y="382" font-size="11" fill="#0d9488" font-weight="400">8 observed port links to this group</text>
+<path d="M220,394 V430 H404.0" fill="none" stroke="#2563eb" stroke-width="3" stroke-linecap="round"/>
+<path d="M572,394 V430 H404.0" fill="none" stroke="#0d9488" stroke-width="3" stroke-linecap="round"/>
+<path d="M404.0,430 V446" fill="none" stroke="#94a3b8" stroke-width="2" stroke-linecap="round"/>
+<text x="52" y="470" font-size="10" fill="#64748b" font-weight="400">Aggregated connections above; click a node in HTML for exact port wiring.</text>
+<a href="#node-node01">
+<rect x="52" y="486" width="128" height="46" rx="7" fill="#f8fafc" stroke="#e2e8f0"/>
+<text x="61" y="505" font-size="12" fill="#172b4d" font-weight="700">node01</text>
+<text x="61" y="522" font-size="10" fill="#2563eb" font-weight="400">4/4 LLDP | 4 UP</text>
+</a>
+<a href="#node-node02">
+<rect x="192" y="486" width="128" height="46" rx="7" fill="#f8fafc" stroke="#e2e8f0"/>
+<text x="201" y="505" font-size="12" fill="#172b4d" font-weight="700">node02</text>
+<text x="201" y="522" font-size="10" fill="#2563eb" font-weight="400">4/4 LLDP | 4 UP</text>
+</a>
+<a href="#node-node03">
+<rect x="332" y="486" width="128" height="46" rx="7" fill="#f8fafc" stroke="#e2e8f0"/>
+<text x="341" y="505" font-size="12" fill="#172b4d" font-weight="700">node03</text>
+<text x="341" y="522" font-size="10" fill="#2563eb" font-weight="400">4/4 LLDP | 4 UP</text>
+</a>
+<a href="#node-node04">
+<rect x="472" y="486" width="128" height="46" rx="7" fill="#f8fafc" stroke="#e2e8f0"/>
+<text x="481" y="505" font-size="12" fill="#172b4d" font-weight="700">node04</text>
+<text x="481" y="522" font-size="10" fill="#2563eb" font-weight="400">4/4 LLDP | 4 UP</text>
+</a>
+<rect x="808" y="246" width="744" height="318" rx="12" fill="white" stroke="#dbe3ef"/>
+<text x="828" y="278" font-size="18" fill="#172b4d" font-weight="700">Neighbor group / 2 devices</text>
+<text x="828" y="301" font-size="12" fill="#64748b" font-weight="400">4 nodes | same observed neighbor set</text>
+<rect x="828" y="318" width="336" height="76" rx="8" fill="#f8fbff" stroke="#7c3aed"/>
+<text x="840" y="342" font-size="12" fill="#7c3aed" font-weight="700">example-leaf-2-1</text>
+<text x="840" y="363" font-size="11" fill="#64748b" font-weight="400">192.0.2.3</text>
+<text x="840" y="382" font-size="11" fill="#7c3aed" font-weight="400">8 observed port links to this group</text>
+<rect x="1180" y="318" width="336" height="76" rx="8" fill="#f8fbff" stroke="#d97706"/>
+<text x="1192" y="342" font-size="12" fill="#d97706" font-weight="700">example-leaf-2-2</text>
+<text x="1192" y="363" font-size="11" fill="#64748b" font-weight="400">192.0.2.4</text>
+<text x="1192" y="382" font-size="11" fill="#d97706" font-weight="400">8 observed port links to this group</text>
+<path d="M996,394 V430 H1180.0" fill="none" stroke="#7c3aed" stroke-width="3" stroke-linecap="round"/>
+<path d="M1348,394 V430 H1180.0" fill="none" stroke="#d97706" stroke-width="3" stroke-linecap="round"/>
+<path d="M1180.0,430 V446" fill="none" stroke="#94a3b8" stroke-width="2" stroke-linecap="round"/>
+<text x="828" y="470" font-size="10" fill="#64748b" font-weight="400">Aggregated connections above; click a node in HTML for exact port wiring.</text>
+<a href="#node-node05">
+<rect x="828" y="486" width="128" height="46" rx="7" fill="#f8fafc" stroke="#e2e8f0"/>
+<text x="837" y="505" font-size="12" fill="#172b4d" font-weight="700">node05</text>
+<text x="837" y="522" font-size="10" fill="#2563eb" font-weight="400">4/4 LLDP | 4 UP</text>
+</a>
+<a href="#node-node06">
+<rect x="968" y="486" width="128" height="46" rx="7" fill="#f8fafc" stroke="#e2e8f0"/>
+<text x="977" y="505" font-size="12" fill="#172b4d" font-weight="700">node06</text>
+<text x="977" y="522" font-size="10" fill="#2563eb" font-weight="400">4/4 LLDP | 4 UP</text>
+</a>
+<a href="#node-node07">
+<rect x="1108" y="486" width="128" height="46" rx="7" fill="#f8fafc" stroke="#e2e8f0"/>
+<text x="1117" y="505" font-size="12" fill="#172b4d" font-weight="700">node07</text>
+<text x="1117" y="522" font-size="10" fill="#2563eb" font-weight="400">4/4 LLDP | 4 UP</text>
+</a>
+<a href="#node-node08">
+<rect x="1248" y="486" width="128" height="46" rx="7" fill="#f8fafc" stroke="#e2e8f0"/>
+<text x="1257" y="505" font-size="12" fill="#172b4d" font-weight="700">node08</text>
+<text x="1257" y="522" font-size="10" fill="#2563eb" font-weight="400">4/4 LLDP | 4 UP</text>
+</a>
+<rect x="32" y="588" width="1520" height="226" rx="12" fill="white" stroke="#dbe3ef"/>
+<text x="52" y="620" font-size="18" fill="#172b4d" font-weight="700">LLDP not observed</text>
+<text x="52" y="643" font-size="12" fill="#64748b" font-weight="400">2 nodes | same observed neighbor set</text>
+<text x="52" y="720" font-size="10" fill="#64748b" font-weight="400">No switch inferred. Link-UP ports still have empty neighbor fields.</text>
+<a href="#node-node09">
+<rect x="52" y="736" width="128" height="46" rx="7" fill="#fffbeb" stroke="#e2e8f0"/>
+<text x="61" y="755" font-size="12" fill="#172b4d" font-weight="700">node09</text>
+<text x="61" y="772" font-size="10" fill="#d97706" font-weight="400">0/4 LLDP | 4 UP</text>
+</a>
+<a href="#node-node10">
+<rect x="192" y="736" width="128" height="46" rx="7" fill="#fffbeb" stroke="#e2e8f0"/>
+<text x="201" y="755" font-size="12" fill="#172b4d" font-weight="700">node10</text>
+<text x="201" y="772" font-size="10" fill="#d97706" font-weight="400">0/4 LLDP | 4 UP</text>
+</a>
+<text x="32" y="860" font-size="13" fill="#64748b" font-weight="400">Only observed LLDP is drawn. Group lines are aggregated; no switch-to-switch links are inferred.</text>
+<text x="32" y="884" font-size="12" fill="#64748b" font-weight="400">PCI vendor selection: all</text>
 </g></svg>

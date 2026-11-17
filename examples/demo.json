@@ -1,10 +1,10 @@
 {
   "schema_version": 1,
-  "collected_at": "Synthetic example (not live infrastructure)",
+  "collected_at": "SYNTHETIC EXAMPLE / NOT LIVE INFRASTRUCTURE",
   "nodes": [
     {
-      "node": "n01",
-      "hostname": "n01",
+      "node": "node01",
+      "hostname": "node01",
       "ports": [
         {
           "interface": "eth0",
@@ -17,22 +17,102 @@
           "is_vf": false,
           "neighbors": [
             {
-              "switch": "switch-a",
+              "switch": "example-leaf-1-1",
               "chassis_id": "02:00:00:00:00:01",
-              "port": "Ethernet1/1",
               "management_ips": [
                 "192.0.2.1"
-              ]
+              ],
+              "port": "Ethernet1/1"
             }
-          ]
+          ],
+          "vendor_id": "0x15b3",
+          "device_id": "0x0000",
+          "vendor_name": "Mellanox",
+          "model": "Synthetic NIC",
+          "driver": "mlx5_core"
+        },
+        {
+          "interface": "eth1",
+          "mac": "00:11:22:33:44:55",
+          "operstate": "up",
+          "carrier": "1",
+          "speed_mbps": 25000,
+          "master": "",
+          "device": "0000:01:00.0",
+          "is_vf": false,
+          "neighbors": [
+            {
+              "switch": "example-leaf-1-2",
+              "chassis_id": "02:00:00:00:00:02",
+              "management_ips": [
+                "192.0.2.2"
+              ],
+              "port": "Ethernet1/1"
+            }
+          ],
+          "vendor_id": "0x15b3",
+          "device_id": "0x0000",
+          "vendor_name": "Mellanox",
+          "model": "Synthetic NIC",
+          "driver": "mlx5_core"
+        },
+        {
+          "interface": "eth2",
+          "mac": "00:11:22:33:44:55",
+          "operstate": "up",
+          "carrier": "1",
+          "speed_mbps": 25000,
+          "master": "",
+          "device": "0000:01:00.0",
+          "is_vf": false,
+          "neighbors": [
+            {
+              "switch": "example-leaf-1-1",
+              "chassis_id": "02:00:00:00:00:01",
+              "management_ips": [
+                "192.0.2.1"
+              ],
+              "port": "Ethernet1/2"
+            }
+          ],
+          "vendor_id": "0x15b3",
+          "device_id": "0x0000",
+          "vendor_name": "Mellanox",
+          "model": "Synthetic NIC",
+          "driver": "mlx5_core"
+        },
+        {
+          "interface": "eth3",
+          "mac": "00:11:22:33:44:55",
+          "operstate": "up",
+          "carrier": "1",
+          "speed_mbps": 25000,
+          "master": "",
+          "device": "0000:01:00.0",
+          "is_vf": false,
+          "neighbors": [
+            {
+              "switch": "example-leaf-1-2",
+              "chassis_id": "02:00:00:00:00:02",
+              "management_ips": [
+                "192.0.2.2"
+              ],
+              "port": "Ethernet1/2"
+            }
+          ],
+          "vendor_id": "0x15b3",
+          "device_id": "0x0000",
+          "vendor_name": "Mellanox",
+          "model": "Synthetic NIC",
+          "driver": "mlx5_core"
         }
       ],
       "lldp_status": "ok",
       "errors": []
     },
     {
-      "node": "n02",
-      "hostname": "n02",
+      "node": "node02",
+      "hostname": "node02",
       "ports": [
         {
           "interface": "eth0",
@@ -45,25 +125,886 @@
           "is_vf": false,
           "neighbors": [
             {
-              "switch": "switch-a",
+              "switch": "example-leaf-1-1",
               "chassis_id": "02:00:00:00:00:01",
-              "port": "Ethernet1/2",
               "management_ips": [
                 "192.0.2.1"
-              ]
+              ],
+              "port": "Ethernet1/3"
             }
-          ]
+          ],
+          "vendor_id": "0x15b3",
+          "device_id": "0x0000",
+          "vendor_name": "Mellanox",
+          "model": "Synthetic NIC",
+          "driver": "mlx5_core"
         },
         {
           "interface": "eth1",
           "mac": "00:11:22:33:44:55",
-          "operstate": "down",
-          "carrier": "0",
-          "speed_mbps": null,
+          "operstate": "up",
+          "carrier": "1",
+          "speed_mbps": 25000,
           "master": "",
           "device": "0000:01:00.0",
           "is_vf": false,
-          "neighbors": []
+          "neighbors": [
+            {
+              "switch": "example-leaf-1-2",
+              "chassis_id": "02:00:00:00:00:02",
+              "management_ips": [
+                "192.0.2.2"
+              ],
+              "port": "Ethernet1/3"
+            }
+          ],
+          "vendor_id": "0x15b3",
+          "device_id": "0x0000",
+          "vendor_name": "Mellanox",
+          "model": "Synthetic NIC",
+          "driver": "mlx5_core"
+        },
+        {
+          "interface": "eth2",
+          "mac": "00:11:22:33:44:55",
+          "operstate": "up",
+          "carrier": "1",
+          "speed_mbps": 25000,
+          "master": "",
+          "device": "0000:01:00.0",
+          "is_vf": false,
+          "neighbors": [
+            {
+              "switch": "example-leaf-1-1",
+              "chassis_id": "02:00:00:00:00:01",
+              "management_ips": [
+                "192.0.2.1"
+              ],
+              "port": "Ethernet1/4"
+            }
+          ],
+          "vendor_id": "0x15b3",
+          "device_id": "0x0000",
+          "vendor_name": "Mellanox",
+          "model": "Synthetic NIC",
+          "driver": "mlx5_core"
+        },
+        {
+          "interface": "eth3",
+          "mac": "00:11:22:33:44:55",
+          "operstate": "up",
+          "carrier": "1",
+          "speed_mbps": 25000,
+          "master": "",
+          "device": "0000:01:00.0",
+          "is_vf": false,
+          "neighbors": [
+            {
+              "switch": "example-leaf-1-2",
+              "chassis_id": "02:00:00:00:00:02",
+              "management_ips": [
+                "192.0.2.2"
+              ],
+              "port": "Ethernet1/4"
+            }
+          ],
+          "vendor_id": "0x15b3",
+          "device_id": "0x0000",
+          "vendor_name": "Mellanox",
+          "model": "Synthetic NIC",
+          "driver": "mlx5_core"
+        }
+      ],
+      "lldp_status": "ok",
+      "errors": []
+    },
+    {
+      "node": "node03",
+      "hostname": "node03",
+      "ports": [
+        {
+          "interface": "eth0",
+          "mac": "00:11:22:33:44:55",
+          "operstate": "up",
+          "carrier": "1",
+          "speed_mbps": 25000,
+          "master": "",
+          "device": "0000:01:00.0",
+          "is_vf": false,
+          "neighbors": [
+            {
+              "switch": "example-leaf-1-1",
+              "chassis_id": "02:00:00:00:00:01",
+              "management_ips": [
+                "192.0.2.1"
+              ],
+              "port": "Ethernet1/5"
+            }
+          ],
+          "vendor_id": "0x15b3",
+          "device_id": "0x0000",
+          "vendor_name": "Mellanox",
+          "model": "Synthetic NIC",
+          "driver": "mlx5_core"
+        },
+        {
+          "interface": "eth1",
+          "mac": "00:11:22:33:44:55",
+          "operstate": "up",
+          "carrier": "1",
+          "speed_mbps": 25000,
+          "master": "",
+          "device": "0000:01:00.0",
+          "is_vf": false,
+          "neighbors": [
+            {
+              "switch": "example-leaf-1-2",
+              "chassis_id": "02:00:00:00:00:02",
+              "management_ips": [
+                "192.0.2.2"
+              ],
+              "port": "Ethernet1/5"
+            }
+          ],
+          "vendor_id": "0x15b3",
+          "device_id": "0x0000",
+          "vendor_name": "Mellanox",
+          "model": "Synthetic NIC",
+          "driver": "mlx5_core"
+        },
+        {
+          "interface": "eth2",
+          "mac": "00:11:22:33:44:55",
+          "operstate": "up",
+          "carrier": "1",
+          "speed_mbps": 25000,
+          "master": "",
+          "device": "0000:01:00.0",
+          "is_vf": false,
+          "neighbors": [
+            {
+              "switch": "example-leaf-1-1",
+              "chassis_id": "02:00:00:00:00:01",
+              "management_ips": [
+                "192.0.2.1"
+              ],
+              "port": "Ethernet1/6"
+            }
+          ],
+          "vendor_id": "0x15b3",
+          "device_id": "0x0000",
+          "vendor_name": "Mellanox",
+          "model": "Synthetic NIC",
+          "driver": "mlx5_core"
+        },
+        {
+          "interface": "eth3",
+          "mac": "00:11:22:33:44:55",
+          "operstate": "up",
+          "carrier": "1",
+          "speed_mbps": 25000,
+          "master": "",
+          "device": "0000:01:00.0",
+          "is_vf": false,
+          "neighbors": [
+            {
+              "switch": "example-leaf-1-2",
+              "chassis_id": "02:00:00:00:00:02",
+              "management_ips": [
+                "192.0.2.2"
+              ],
+              "port": "Ethernet1/6"
+            }
+          ],
+          "vendor_id": "0x15b3",
+          "device_id": "0x0000",
+          "vendor_name": "Mellanox",
+          "model": "Synthetic NIC",
+          "driver": "mlx5_core"
+        }
+      ],
+      "lldp_status": "ok",
+      "errors": []
+    },
+    {
+      "node": "node04",
+      "hostname": "node04",
+      "ports": [
+        {
+          "interface": "eth0",
+          "mac": "00:11:22:33:44:55",
+          "operstate": "up",
+          "carrier": "1",
+          "speed_mbps": 25000,
+          "master": "",
+          "device": "0000:01:00.0",
+          "is_vf": false,
+          "neighbors": [
+            {
+              "switch": "example-leaf-1-1",
+              "chassis_id": "02:00:00:00:00:01",
+              "management_ips": [
+                "192.0.2.1"
+              ],
+              "port": "Ethernet1/7"
+            }
+          ],
+          "vendor_id": "0x15b3",
+          "device_id": "0x0000",
+          "vendor_name": "Mellanox",
+          "model": "Synthetic NIC",
+          "driver": "mlx5_core"
+        },
+        {
+          "interface": "eth1",
+          "mac": "00:11:22:33:44:55",
+          "operstate": "up",
+          "carrier": "1",
+          "speed_mbps": 25000,
+          "master": "",
+          "device": "0000:01:00.0",
+          "is_vf": false,
+          "neighbors": [
+            {
+              "switch": "example-leaf-1-2",
+              "chassis_id": "02:00:00:00:00:02",
+              "management_ips": [
+                "192.0.2.2"
+              ],
+              "port": "Ethernet1/7"
+            }
+          ],
+          "vendor_id": "0x15b3",
+          "device_id": "0x0000",
+          "vendor_name": "Mellanox",
+          "model": "Synthetic NIC",
+          "driver": "mlx5_core"
+        },
+        {
+          "interface": "eth2",
+          "mac": "00:11:22:33:44:55",
+          "operstate": "up",
+          "carrier": "1",
+          "speed_mbps": 25000,
+          "master": "",
+          "device": "0000:01:00.0",
+          "is_vf": false,
+          "neighbors": [
+            {
+              "switch": "example-leaf-1-1",
+              "chassis_id": "02:00:00:00:00:01",
+              "management_ips": [
+                "192.0.2.1"
+              ],
+              "port": "Ethernet1/8"
+            }
+          ],
+          "vendor_id": "0x15b3",
+          "device_id": "0x0000",
+          "vendor_name": "Mellanox",
+          "model": "Synthetic NIC",
+          "driver": "mlx5_core"
+        },
+        {
+          "interface": "eth3",
+          "mac": "00:11:22:33:44:55",
+          "operstate": "up",
+          "carrier": "1",
+          "speed_mbps": 25000,
+          "master": "",
+          "device": "0000:01:00.0",
+          "is_vf": false,
+          "neighbors": [
+            {
+              "switch": "example-leaf-1-2",
+              "chassis_id": "02:00:00:00:00:02",
+              "management_ips": [
+                "192.0.2.2"
+              ],
+              "port": "Ethernet1/8"
+            }
+          ],
+          "vendor_id": "0x15b3",
+          "device_id": "0x0000",
+          "vendor_name": "Mellanox",
+          "model": "Synthetic NIC",
+          "driver": "mlx5_core"
+        }
+      ],
+      "lldp_status": "ok",
+      "errors": []
+    },
+    {
+      "node": "node05",
+      "hostname": "node05",
+      "ports": [
+        {
+          "interface": "eth0",
+          "mac": "00:11:22:33:44:55",
+          "operstate": "up",
+          "carrier": "1",
+          "speed_mbps": 25000,
+          "master": "",
+          "device": "0000:01:00.0",
+          "is_vf": false,
+          "neighbors": [
+            {
+              "switch": "example-leaf-2-1",
+              "chassis_id": "02:00:00:00:01:01",
+              "management_ips": [
+                "192.0.2.3"
+              ],
+              "port": "Ethernet1/1"
+            }
+          ],
+          "vendor_id": "0x15b3",
+          "device_id": "0x0000",
+          "vendor_name": "Mellanox",
+          "model": "Synthetic NIC",
+          "driver": "mlx5_core"
+        },
+        {
+          "interface": "eth1",
+          "mac": "00:11:22:33:44:55",
+          "operstate": "up",
+          "carrier": "1",
+          "speed_mbps": 25000,
+          "master": "",
+          "device": "0000:01:00.0",
+          "is_vf": false,
+          "neighbors": [
+            {
+              "switch": "example-leaf-2-2",
+              "chassis_id": "02:00:00:00:01:02",
+              "management_ips": [
+                "192.0.2.4"
+              ],
+              "port": "Ethernet1/1"
+            }
+          ],
+          "vendor_id": "0x15b3",
+          "device_id": "0x0000",
+          "vendor_name": "Mellanox",
+          "model": "Synthetic NIC",
+          "driver": "mlx5_core"
+        },
+        {
+          "interface": "eth2",
+          "mac": "00:11:22:33:44:55",
+          "operstate": "up",
+          "carrier": "1",
+          "speed_mbps": 25000,
+          "master": "",
+          "device": "0000:01:00.0",
+          "is_vf": false,
+          "neighbors": [
+            {
+              "switch": "example-leaf-2-1",
+              "chassis_id": "02:00:00:00:01:01",
+              "management_ips": [
+                "192.0.2.3"
+              ],
+              "port": "Ethernet1/2"
+            }
+          ],
+          "vendor_id": "0x15b3",
+          "device_id": "0x0000",
+          "vendor_name": "Mellanox",
+          "model": "Synthetic NIC",
+          "driver": "mlx5_core"
+        },
+        {
+          "interface": "eth3",
+          "mac": "00:11:22:33:44:55",
+          "operstate": "up",
+          "carrier": "1",
+          "speed_mbps": 25000,
+          "master": "",
+          "device": "0000:01:00.0",
+          "is_vf": false,
+          "neighbors": [
+            {
+              "switch": "example-leaf-2-2",
+              "chassis_id": "02:00:00:00:01:02",
+              "management_ips": [
+                "192.0.2.4"
+              ],
+              "port": "Ethernet1/2"
+            }
+          ],
+          "vendor_id": "0x15b3",
+          "device_id": "0x0000",
+          "vendor_name": "Mellanox",
+          "model": "Synthetic NIC",
+          "driver": "mlx5_core"
+        }
+      ],
+      "lldp_status": "ok",
+      "errors": []
+    },
+    {
+      "node": "node06",
+      "hostname": "node06",
+      "ports": [
+        {
+          "interface": "eth0",
+          "mac": "00:11:22:33:44:55",
+          "operstate": "up",
+          "carrier": "1",
+          "speed_mbps": 25000,
+          "master": "",
+          "device": "0000:01:00.0",
+          "is_vf": false,
+          "neighbors": [
+            {
+              "switch": "example-leaf-2-1",
+              "chassis_id": "02:00:00:00:01:01",
+              "management_ips": [
+                "192.0.2.3"
+              ],
+              "port": "Ethernet1/3"
+            }
+          ],
+          "vendor_id": "0x15b3",
+          "device_id": "0x0000",
+          "vendor_name": "Mellanox",
+          "model": "Synthetic NIC",
+          "driver": "mlx5_core"
+        },
+        {
+          "interface": "eth1",
+          "mac": "00:11:22:33:44:55",
+          "operstate": "up",
+          "carrier": "1",
+          "speed_mbps": 25000,
+          "master": "",
+          "device": "0000:01:00.0",
+          "is_vf": false,
+          "neighbors": [
+            {
+              "switch": "example-leaf-2-2",
+              "chassis_id": "02:00:00:00:01:02",
+              "management_ips": [
+                "192.0.2.4"
+              ],
+              "port": "Ethernet1/3"
+            }
+          ],
+          "vendor_id": "0x15b3",
+          "device_id": "0x0000",
+          "vendor_name": "Mellanox",
+          "model": "Synthetic NIC",
+          "driver": "mlx5_core"
+        },
+        {
+          "interface": "eth2",
+          "mac": "00:11:22:33:44:55",
+          "operstate": "up",
+          "carrier": "1",
+          "speed_mbps": 25000,
+          "master": "",
+          "device": "0000:01:00.0",
+          "is_vf": false,
+          "neighbors": [
+            {
+              "switch": "example-leaf-2-1",
+              "chassis_id": "02:00:00:00:01:01",
+              "management_ips": [
+                "192.0.2.3"
+              ],
+              "port": "Ethernet1/4"
+            }
+          ],
+          "vendor_id": "0x15b3",
+          "device_id": "0x0000",
+          "vendor_name": "Mellanox",
+          "model": "Synthetic NIC",
+          "driver": "mlx5_core"
+        },
+        {
+          "interface": "eth3",
+          "mac": "00:11:22:33:44:55",
+          "operstate": "up",
+          "carrier": "1",
+          "speed_mbps": 25000,
+          "master": "",
+          "device": "0000:01:00.0",
+          "is_vf": false,
+          "neighbors": [
+            {
+              "switch": "example-leaf-2-2",
+              "chassis_id": "02:00:00:00:01:02",
+              "management_ips": [
+                "192.0.2.4"
+              ],
+              "port": "Ethernet1/4"
+            }
+          ],
+          "vendor_id": "0x15b3",
+          "device_id": "0x0000",
+          "vendor_name": "Mellanox",
+          "model": "Synthetic NIC",
+          "driver": "mlx5_core"
+        }
+      ],
+      "lldp_status": "ok",
+      "errors": []
+    },
+    {
+      "node": "node07",
+      "hostname": "node07",
+      "ports": [
+        {
+          "interface": "eth0",
+          "mac": "00:11:22:33:44:55",
+          "operstate": "up",
+          "carrier": "1",
+          "speed_mbps": 25000,
+          "master": "",
+          "device": "0000:01:00.0",
+          "is_vf": false,
+          "neighbors": [
+            {
+              "switch": "example-leaf-2-1",
+              "chassis_id": "02:00:00:00:01:01",
+              "management_ips": [
+                "192.0.2.3"
+              ],
+              "port": "Ethernet1/5"
+            }
+          ],
+          "vendor_id": "0x15b3",
+          "device_id": "0x0000",
+          "vendor_name": "Mellanox",
+          "model": "Synthetic NIC",
+          "driver": "mlx5_core"
+        },
+        {
+          "interface": "eth1",
+          "mac": "00:11:22:33:44:55",
+          "operstate": "up",
+          "carrier": "1",
+          "speed_mbps": 25000,
+          "master": "",
+          "device": "0000:01:00.0",
+          "is_vf": false,
+          "neighbors": [
+            {
+              "switch": "example-leaf-2-2",
+              "chassis_id": "02:00:00:00:01:02",
+              "management_ips": [
+                "192.0.2.4"
+              ],
+              "port": "Ethernet1/5"
+            }
+          ],
+          "vendor_id": "0x15b3",
+          "device_id": "0x0000",
+          "vendor_name": "Mellanox",
+          "model": "Synthetic NIC",
+          "driver": "mlx5_core"
+        },
+        {
+          "interface": "eth2",
+          "mac": "00:11:22:33:44:55",
+          "operstate": "up",
+          "carrier": "1",
+          "speed_mbps": 25000,
+          "master": "",
+          "device": "0000:01:00.0",
+          "is_vf": false,
+          "neighbors": [
+            {
+              "switch": "example-leaf-2-1",
+              "chassis_id": "02:00:00:00:01:01",
+              "management_ips": [
+                "192.0.2.3"
+              ],
+              "port": "Ethernet1/6"
+            }
+          ],
+          "vendor_id": "0x15b3",
+          "device_id": "0x0000",
+          "vendor_name": "Mellanox",
+          "model": "Synthetic NIC",
+          "driver": "mlx5_core"
+        },
+        {
+          "interface": "eth3",
+          "mac": "00:11:22:33:44:55",
+          "operstate": "up",
+          "carrier": "1",
+          "speed_mbps": 25000,
+          "master": "",
+          "device": "0000:01:00.0",
+          "is_vf": false,
+          "neighbors": [
+            {
+              "switch": "example-leaf-2-2",
+              "chassis_id": "02:00:00:00:01:02",
+              "management_ips": [
+                "192.0.2.4"
+              ],
+              "port": "Ethernet1/6"
+            }
+          ],
+          "vendor_id": "0x15b3",
+          "device_id": "0x0000",
+          "vendor_name": "Mellanox",
+          "model": "Synthetic NIC",
+          "driver": "mlx5_core"
+        }
+      ],
+      "lldp_status": "ok",
+      "errors": []
+    },
+    {
+      "node": "node08",
+      "hostname": "node08",
+      "ports": [
+        {
+          "interface": "eth0",
+          "mac": "00:11:22:33:44:55",
+          "operstate": "up",
+          "carrier": "1",
+          "speed_mbps": 25000,
+          "master": "",
+          "device": "0000:01:00.0",
+          "is_vf": false,
+          "neighbors": [
+            {
+              "switch": "example-leaf-2-1",
+              "chassis_id": "02:00:00:00:01:01",
+              "management_ips": [
+                "192.0.2.3"
+              ],
+              "port": "Ethernet1/7"
+            }
+          ],
+          "vendor_id": "0x15b3",
+          "device_id": "0x0000",
+          "vendor_name": "Mellanox",
+          "model": "Synthetic NIC",
+          "driver": "mlx5_core"
+        },
+        {
+          "interface": "eth1",
+          "mac": "00:11:22:33:44:55",
+          "operstate": "up",
+          "carrier": "1",
+          "speed_mbps": 25000,
+          "master": "",
+          "device": "0000:01:00.0",
+          "is_vf": false,
+          "neighbors": [
+            {
+              "switch": "example-leaf-2-2",
+              "chassis_id": "02:00:00:00:01:02",
+              "management_ips": [
+                "192.0.2.4"
+              ],
+              "port": "Ethernet1/7"
+            }
+          ],
+          "vendor_id": "0x15b3",
+          "device_id": "0x0000",
+          "vendor_name": "Mellanox",
+          "model": "Synthetic NIC",
+          "driver": "mlx5_core"
+        },
+        {
+          "interface": "eth2",
+          "mac": "00:11:22:33:44:55",
+          "operstate": "up",
+          "carrier": "1",
+          "speed_mbps": 25000,
+          "master": "",
+          "device": "0000:01:00.0",
+          "is_vf": false,
+          "neighbors": [
+            {
+              "switch": "example-leaf-2-1",
+              "chassis_id": "02:00:00:00:01:01",
+              "management_ips": [
+                "192.0.2.3"
+              ],
+              "port": "Ethernet1/8"
+            }
+          ],
+          "vendor_id": "0x15b3",
+          "device_id": "0x0000",
+          "vendor_name": "Mellanox",
+          "model": "Synthetic NIC",
+          "driver": "mlx5_core"
+        },
+        {
+          "interface": "eth3",
+          "mac": "00:11:22:33:44:55",
+          "operstate": "up",
+          "carrier": "1",
+          "speed_mbps": 25000,
+          "master": "",
+          "device": "0000:01:00.0",
+          "is_vf": false,
+          "neighbors": [
+            {
+              "switch": "example-leaf-2-2",
+              "chassis_id": "02:00:00:00:01:02",
+              "management_ips": [
+                "192.0.2.4"
+              ],
+              "port": "Ethernet1/8"
+            }
+          ],
+          "vendor_id": "0x15b3",
+          "device_id": "0x0000",
+          "vendor_name": "Mellanox",
+          "model": "Synthetic NIC",
+          "driver": "mlx5_core"
+        }
+      ],
+      "lldp_status": "ok",
+      "errors": []
+    },
+    {
+      "node": "node09",
+      "hostname": "node09",
+      "ports": [
+        {
+          "interface": "eth0",
+          "mac": "00:11:22:33:44:55",
+          "operstate": "up",
+          "carrier": "1",
+          "speed_mbps": 25000,
+          "master": "",
+          "device": "0000:01:00.0",
+          "is_vf": false,
+          "neighbors": [],
+          "vendor_id": "0x15b3",
+          "device_id": "0x0000",
+          "vendor_name": "Mellanox",
+          "model": "Synthetic NIC",
+          "driver": "mlx5_core"
+        },
+        {
+          "interface": "eth1",
+          "mac": "00:11:22:33:44:55",
+          "operstate": "up",
+          "carrier": "1",
+          "speed_mbps": 25000,
+          "master": "",
+          "device": "0000:01:00.0",
+          "is_vf": false,
+          "neighbors": [],
+          "vendor_id": "0x15b3",
+          "device_id": "0x0000",
+          "vendor_name": "Mellanox",
+          "model": "Synthetic NIC",
+          "driver": "mlx5_core"
+        },
+        {
+          "interface": "eth2",
+          "mac": "00:11:22:33:44:55",
+          "operstate": "up",
+          "carrier": "1",
+          "speed_mbps": 25000,
+          "master": "",
+          "device": "0000:01:00.0",
+          "is_vf": false,
+          "neighbors": [],
+          "vendor_id": "0x15b3",
+          "device_id": "0x0000",
+          "vendor_name": "Mellanox",
+          "model": "Synthetic NIC",
+          "driver": "mlx5_core"
+        },
+        {
+          "interface": "eth3",
+          "mac": "00:11:22:33:44:55",
+          "operstate": "up",
+          "carrier": "1",
+          "speed_mbps": 25000,
+          "master": "",
+          "device": "0000:01:00.0",
+          "is_vf": false,
+          "neighbors": [],
+          "vendor_id": "0x15b3",
+          "device_id": "0x0000",
+          "vendor_name": "Mellanox",
+          "model": "Synthetic NIC",
+          "driver": "mlx5_core"
+        }
+      ],
+      "lldp_status": "ok",
+      "errors": []
+    },
+    {
+      "node": "node10",
+      "hostname": "node10",
+      "ports": [
+        {
+          "interface": "eth0",
+          "mac": "00:11:22:33:44:55",
+          "operstate": "up",
+          "carrier": "1",
+          "speed_mbps": 25000,
+          "master": "",
+          "device": "0000:01:00.0",
+          "is_vf": false,
+          "neighbors": [],
+          "vendor_id": "0x15b3",
+          "device_id": "0x0000",
+          "vendor_name": "Mellanox",
+          "model": "Synthetic NIC",
+          "driver": "mlx5_core"
+        },
+        {
+          "interface": "eth1",
+          "mac": "00:11:22:33:44:55",
+          "operstate": "up",
+          "carrier": "1",
+          "speed_mbps": 25000,
+          "master": "",
+          "device": "0000:01:00.0",
+          "is_vf": false,
+          "neighbors": [],
+          "vendor_id": "0x15b3",
+          "device_id": "0x0000",
+          "vendor_name": "Mellanox",
+          "model": "Synthetic NIC",
+          "driver": "mlx5_core"
+        },
+        {
+          "interface": "eth2",
+          "mac": "00:11:22:33:44:55",
+          "operstate": "up",
+          "carrier": "1",
+          "speed_mbps": 25000,
+          "master": "",
+          "device": "0000:01:00.0",
+          "is_vf": false,
+          "neighbors": [],
+          "vendor_id": "0x15b3",
+          "device_id": "0x0000",
+          "vendor_name": "Mellanox",
+          "model": "Synthetic NIC",
+          "driver": "mlx5_core"
+        },
+        {
+          "interface": "eth3",
+          "mac": "00:11:22:33:44:55",
+          "operstate": "up",
+          "carrier": "1",
+          "speed_mbps": 25000,
+          "master": "",
+          "device": "0000:01:00.0",
+          "is_vf": false,
+          "neighbors": [],
+          "vendor_id": "0x15b3",
+          "device_id": "0x0000",
+          "vendor_name": "Mellanox",
+          "model": "Synthetic NIC",
+          "driver": "mlx5_core"
         }
       ],
       "lldp_status": "ok",

@@ -4,6 +4,7 @@ from datetime import datetime, timezone
 from pathlib import Path
 from .collector import scan
 from .hosts import expand
+from .selection import select, vendor_ids
 from .render import console, svg, write_csv
 
 
@@ -35,6 +36,15 @@ def main(argv=None):
     p.add_argument("--csv", type=Path)
     p.add_argument("--svg", type=Path)
     p.add_argument("--quiet", action="store_true", help="suppress console topology")
+    p.add_argument(
+        "--vendor",
+        action="append",
+        help="comma-separated/repeatable PCI vendors; default: mellanox; all",
+    )
+    p.add_argument(
+        "--driver", action="append", help="optional driver allowlist, repeatable"
+    )
+    p.add_argument("--html", type=Path, help="standalone searchable topology atlas")
     args = p.parse_args(argv)
     if (
         not 1 <= args.workers <= 128
@@ -43,6 +53,7 @@ def main(argv=None):
     ):
         p.error("workers: 1..128; timeout: (0,3600]; limit: 1..100000")
     try:
+        vendor_ids(args.vendor)
         expressions = list(args.nodes)
         if args.nodes_file:
             expressions += [
@@ -76,6 +87,11 @@ def main(argv=None):
                     sudo=args.sudo,
                 ),
             }
+        report = select(report, args.vendor, args.driver)
+        if args.html:
+            from .atlas import document
+
+            args.html.write_text(document(report), encoding="utf-8")
         if args.json_path:
             args.json_path.write_text(
                 json.dumps(report, indent=2, ensure_ascii=False) + "\n"

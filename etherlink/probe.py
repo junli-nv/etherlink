@@ -47,6 +47,40 @@ def read(path):
         return ""
 
 
+def hardware(path):
+    device = path / "device"
+    vendor = read(device / "vendor")
+    product = read(device / "device")
+    names = {"vendor_name": "", "model": ""}
+    for database in ("/usr/share/misc/pci.ids", "/usr/share/hwdata/pci.ids"):
+        try:
+            active = False
+            for line in Path(database).read_text(errors="replace").splitlines():
+                if line.startswith(vendor.removeprefix("0x") + " ") and vendor:
+                    names["vendor_name"] = line[6:].strip()
+                    active = True
+                elif active and line and not line.startswith(("\t", "#")):
+                    break
+                elif (
+                    active
+                    and line.startswith("\t" + product.removeprefix("0x") + " ")
+                    and product
+                ):
+                    names["model"] = line[7:].strip()
+                    break
+            break
+        except OSError:
+            continue
+    return {
+        "vendor_id": vendor,
+        "device_id": product,
+        **names,
+        "driver": (device / "driver").resolve().name
+        if (device / "driver").exists()
+        else "",
+    }
+
+
 def interfaces(root=Path("/sys/class/net"), include_virtual=False):
     ports = []
     for p in sorted(root.iterdir()):
@@ -59,6 +93,7 @@ def interfaces(root=Path("/sys/class/net"), include_virtual=False):
         master = p / "master"
         ports.append(
             {
+                **hardware(p),
                 "interface": p.name,
                 "mac": read(p / "address"),
                 "operstate": read(p / "operstate"),
