@@ -5,12 +5,13 @@ from pathlib import Path
 from .collector import scan
 from .hosts import expand
 from .selection import select, vendor_ids
+from .recovery import recover
 from .render import console, svg, write_csv
 
 
 def main(argv=None):
     p = argparse.ArgumentParser(
-        description="Read-only Linux Ethernet / LLDP topology over SSH."
+        description="Linux Ethernet / LLDP topology; one automatic LLDP restart for UP physical ports lacking neighbors."
     )
     p.add_argument(
         "nodes",
@@ -45,6 +46,11 @@ def main(argv=None):
         "--driver", action="append", help="optional driver allowlist, repeatable"
     )
     p.add_argument("--html", type=Path, help="standalone searchable topology atlas")
+    p.add_argument(
+        "--no-restart-lldp",
+        action="store_true",
+        help="disable automatic one-time LLDP recovery (live collection only)",
+    )
     args = p.parse_args(argv)
     if (
         not 1 <= args.workers <= 128
@@ -87,6 +93,16 @@ def main(argv=None):
                     sudo=args.sudo,
                 ),
             }
+        if not args.input and not args.no_restart_lldp:
+            report = recover(
+                report,
+                args.vendor,
+                args.driver,
+                workers=args.workers,
+                timeout=args.timeout,
+                include_virtual=args.include_virtual,
+                sudo=args.sudo,
+            )
         report = select(report, args.vendor, args.driver)
         if args.html:
             from .atlas import document

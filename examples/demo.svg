@@ -93,12 +93,12 @@
 <a href="#node-node09">
 <rect x="52" y="736" width="128" height="46" rx="7" fill="#fffbeb" stroke="#e2e8f0"/>
 <text x="61" y="755" font-size="12" fill="#172b4d" font-weight="700">node09</text>
-<text x="61" y="772" font-size="10" fill="#d97706" font-weight="400">0/4 LLDP | 4 UP</text>
+<text x="61" y="772" font-size="10" fill="#d97706" font-weight="400">0/4 LLDP | 1 UP</text>
 </a>
 <a href="#node-node10">
 <rect x="192" y="736" width="128" height="46" rx="7" fill="#fffbeb" stroke="#e2e8f0"/>
 <text x="201" y="755" font-size="12" fill="#172b4d" font-weight="700">node10</text>
-<text x="201" y="772" font-size="10" fill="#d97706" font-weight="400">0/4 LLDP | 4 UP</text>
+<text x="201" y="772" font-size="10" fill="#d97706" font-weight="400">0/4 LLDP | 1 UP</text>
 </a>
 <text x="32" y="860" font-size="13" fill="#64748b" font-weight="400">Only observed LLDP is drawn. Group lines are aggregated; no switch-to-switch links are inferred.</text>
 <text x="32" y="884" font-size="12" fill="#64748b" font-weight="400">PCI vendor selection: all</text>

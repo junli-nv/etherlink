@@ -9,7 +9,12 @@ def clean(value):
 
 def rows(report):
     for node in report["nodes"]:
-        for port in node["ports"]:
+        for port in sorted(
+            node["ports"],
+            key=lambda p: [
+                int(v) if v.isdigit() else v for v in re.split(r"(\d+)", p["interface"])
+            ],
+        ):
             for peer in port["neighbors"] or [{}]:
                 yield {
                     "node": node["node"],
@@ -95,6 +100,17 @@ def console(report):
             lines.append(
                 "\n" + clean(node["node"]) + ": no Ethernet interfaces collected"
             )
+        recovery = node.get("lldp_recovery")
+        if recovery:
+            lines.append(
+                "  LLDP recovery "
+                + clean(node["node"])
+                + ": "
+                + clean(recovery.get("outcome", "attempted"))
+                + " (one attempt)"
+            )
+        for warning in node.get("warnings", []):
+            lines.append("  WARNING " + clean(node["node"]) + ": " + clean(warning))
         for error in node["errors"]:
             lines.append("  WARNING " + clean(node["node"]) + ": " + clean(error))
     lines.append("\nLLDP is advertised neighbor data; empty does not mean unplugged.")

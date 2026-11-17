@@ -228,62 +228,68 @@ def overview(report):
 
 
 def node_diagram(node, devices=None, colors=None):
-    report = {"nodes": [node]}
-    devices = devices or peers(report)
+    devices = devices or peers({"nodes": [node]})
     colors = colors or {
         key: COLORS[i % len(COLORS)] for i, key in enumerate(sorted(devices))
     }
-    known, missing = defaultdict(list), []
-    for row in rows(report):
-        if row["switch"] or row["chassis_id"]:
-            known[identity(row)].append(row)
-        else:
-            missing.append(row)
-    ordered = [row for key in sorted(known) for row in known[key]] + missing
-    height = 150 + max(1, len(ordered)) * 48 + len(known) * 64
+    ports = sorted(node["ports"], key=lambda p: natural(p["interface"]))
+    source_y = {p["interface"]: 180 + i * 64 for i, p in enumerate(ports)}
+    known = {}
+    for port in ports:
+        for row in rows({"nodes": [dict(node, ports=[port])]}):
+            if row["switch"] or row["chassis_id"]:
+                known.setdefault(identity(row), []).append(row)
+    target_y = {}
+    boxes = []
+    top = 124
+    for key, group in known.items():
+        height = 64 + len(group) * 44
+        boxes.append((key, group, top, height))
+        for i, row in enumerate(group):
+            target_y[id(row)] = top + 72 + i * 44
+        top += height + 20
+    height = max(260, 180 + len(ports) * 64, top + 20)
     c = Canvas(1280, height)
     c.text(26, 38, node["node"], 24, weight=700)
-    c.text(26, 62, "Exact port mapping | advertised LLDP neighbors", 12, "#64748b")
+    c.text(26, 62, "Host view | local interface order is fixed", 12, "#64748b")
     c.rect(26, 88, 456, height - 116)
-    c.text(44, 116, "LOCAL ETHERNET PORT", 12, "#64748b", 700)
-    y = 144
-    for key, group in sorted(known.items()):
-        dev = devices[key]
-        c.rect(836, y - 8, 418, 56 + len(group) * 48, "#ffffff", colors[key], 10)
-        c.text(850, y + 14, dev["switch"] or dev["chassis_id"], 13, colors[key], 700)
-        c.text(850, y + 34, dev["management_ips"] or dev["chassis_id"], 11, "#64748b")
-        y += 64
-        for row in group:
-            label = (
-                row["interface"]
-                + "  "
-                + (str(row["speed_mbps"] // 1000) + "G" if row["speed_mbps"] else "?")
-            )
-            c.text(44, y, label, 14, weight=600)
+    c.text(44, 116, "LOCAL PHYSICAL PORT / LINK STATE", 12, "#64748b", 700)
+    for port in ports:
+        y = source_y[port["interface"]]
+        speed = str(port["speed_mbps"] // 1000) + "G" if port["speed_mbps"] else "?"
+        c.text(44, y, port["interface"], 14, weight=600)
+        c.text(44, y + 20, port["operstate"].upper() + "  " + speed, 11, "#64748b")
+        if not port["neighbors"]:
             c.text(
-                850, y, row["switch_port"] or "(port ID absent)", 14, colors[key], 600
+                520,
+                y,
+                "LLDP: empty"
+                + (
+                    " (normal for DOWN)"
+                    if port["operstate"] == "down"
+                    else " (UP: needs checking)"
+                ),
+                12,
+                "#64748b" if port["operstate"] == "down" else "#a16207",
             )
-            c.path(
-                f"M482,{y - 5} C610,{y - 5} 708,{y - 5} 836,{y - 5}", colors[key], 2.5
+    for key, group, top, h in boxes:
+        dev = devices[key]
+        c.rect(836, top, 418, h, "white", colors[key], 10)
+        c.text(850, top + 24, dev["switch"] or dev["chassis_id"], 13, colors[key], 700)
+        c.text(850, top + 44, dev["management_ips"] or dev["chassis_id"], 11, "#64748b")
+        for row in group:
+            sy = source_y[row["interface"]] - 4
+            ty = target_y[id(row)] - 4
+            c.path(f"M482,{sy} C610,{sy} 708,{ty} 836,{ty}", colors[key], 2.5)
+            c.text(
+                850,
+                ty + 4,
+                row["switch_port"] or "(port ID absent)",
+                14,
+                colors[key],
+                600,
             )
-            y += 48
-    for row in missing:
-        c.text(44, y, row["interface"], 14, weight=600)
-        c.text(
-            520,
-            y,
-            "LLDP: empty | "
-            + row["operstate"]
-            + (
-                " | " + str(row["speed_mbps"] // 1000) + "G"
-                if row["speed_mbps"]
-                else ""
-            ),
-            13,
-            "#a16207",
-        )
-        y += 48
-    if not ordered:
+    if not ports:
         c.text(44, 160, "No matching Ethernet interfaces collected", 14, "#64748b")
     return c.finish()
 
@@ -342,7 +348,14 @@ p{line-height:1.6;color:#64748b}a{color:inherit}
                 + "</tr>"
             )
         out.append("</tbody></table></div>")
-        for error in node["errors"]:
+        recovery = node.get("lldp_recovery")
+        if recovery:
+            out.append(
+                '<div class="warn">LLDP recovery: '
+                + escape(clean(recovery.get("outcome", "attempted")))
+                + " | one restart, one recheck</div>"
+            )
+        for error in node["errors"] + node.get("warnings", []):
             out.append('<div class="warn">' + escape(clean(error)) + "</div>")
         out.append("</details>")
     out.append("""<script>

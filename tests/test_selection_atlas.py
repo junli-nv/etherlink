@@ -67,7 +67,7 @@ class SelectionTests(unittest.TestCase):
                 redirect_stdout(io.StringIO()),
                 patch("etherlink.__main__.console", return_value="") as render,
             ):
-                self.assertEqual(main(["n01", *args]), 0)
+                self.assertEqual(main(["n01", "--no-restart-lldp", *args]), 0)
                 self.assertEqual(
                     len(render.call_args[0][0]["nodes"][0]["ports"]), count
                 )
