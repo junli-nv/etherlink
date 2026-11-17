@@ -6,6 +6,7 @@ from collections import defaultdict
 from html import escape
 from .render import clean, identity, rows
 from .hosts import compact
+from .consistency import analyze, html_summary
 
 COLORS = ["#2563eb", "#0d9488", "#7c3aed", "#d97706", "#db2777", "#0284c7"]
 
@@ -73,6 +74,8 @@ def grouping(report):
 
 
 def overview(report):
+    if "wiring_check" not in report:
+        report = analyze(report)
     devices, groups = grouping(report)
     ports = [p for n in report["nodes"] for p in n["ports"]]
     colors = {key: COLORS[i % len(COLORS)] for i, key in enumerate(sorted(devices))}
@@ -178,10 +181,17 @@ def overview(report):
             columns = 5 if w == 744 else 10
             nx = x + 20 + (index % columns) * 140
             ny = start + (index // columns) * 56
+            wiring = node.get("wiring", {})
             known = sum(bool(p["neighbors"]) for p in node["ports"])
             up = sum(p["carrier"] == "1" for p in node["ports"])
             color = (
-                "#d97706" if up and not known else "#64748b" if not known else "#2563eb"
+                "#b91c1c"
+                if wiring.get("status") == "mismatch"
+                else "#d97706"
+                if up and not known
+                else "#64748b"
+                if not known
+                else "#2563eb"
             )
             name = escape(clean(node["node"]), quote=True)
             c.parts.append(f'<a href="#node-{name}">')
@@ -190,7 +200,11 @@ def overview(report):
                 ny,
                 128,
                 46,
-                "#fffbeb" if up and not known else "#f8fafc",
+                "#fff1f2"
+                if wiring.get("status") == "mismatch"
+                else "#fffbeb"
+                if up and not known
+                else "#f8fafc",
                 "#e2e8f0",
                 7,
             )
@@ -203,6 +217,8 @@ def overview(report):
                     if node["errors"]
                     else "NO MATCHING NICS"
                     if not node["ports"]
+                    else "WIRING DIFFERENT"
+                    if wiring.get("status") == "mismatch"
                     else f"{known}/{len(node['ports'])} LLDP | {up} UP"
                 ),
                 10,
@@ -220,7 +236,12 @@ def overview(report):
         32,
         y + 46,
         "PCI vendor selection: "
-        + str(report.get("selection", {}).get("vendors", "all")),
+        + str(report.get("selection", {}).get("vendors", "all"))
+        + " | Wiring: "
+        + str(report["wiring_check"]["summary"]["consistent"])
+        + " consistent, "
+        + str(report["wiring_check"]["summary"]["mismatch"])
+        + " different",
         12,
         "#64748b",
     )
@@ -231,6 +252,9 @@ def node_diagram(node, devices=None, colors=None):
     devices = devices or peers({"nodes": [node]})
     colors = colors or {
         key: COLORS[i % len(COLORS)] for i, key in enumerate(sorted(devices))
+    }
+    differences = {
+        d["interface"]: d for d in node.get("wiring", {}).get("differences", [])
     }
     ports = sorted(node["ports"], key=lambda p: natural(p["interface"]))
     source_y = {p["interface"]: 180 + i * 64 for i, p in enumerate(ports)}
@@ -251,6 +275,15 @@ def node_diagram(node, devices=None, colors=None):
     height = max(260, 180 + len(ports) * 64, top + 20)
     c = Canvas(1280, height)
     c.text(26, 38, node["node"], 24, weight=700)
+    if node.get("wiring"):
+        c.text(
+            650,
+            38,
+            "Wiring: " + node["wiring"]["status"],
+            14,
+            "#b91c1c" if node["wiring"]["status"] == "mismatch" else "#64748b",
+            700,
+        )
     c.text(26, 62, "Host view | local interface order is fixed", 12, "#64748b")
     c.rect(26, 88, 456, height - 116)
     c.text(44, 116, "LOCAL PHYSICAL PORT / LINK STATE", 12, "#64748b", 700)
@@ -261,7 +294,25 @@ def node_diagram(node, devices=None, colors=None):
             if port["speed_mbps"]
             else "speed unknown"
         )
-        c.text(44, y, port["interface"], 14, weight=600)
+        if port["interface"] in differences:
+            c.rect(36, y - 22, 436, 52, "#fff1f2", "#fecdd3", 6)
+            expected = differences[port["interface"]]["expected"]
+            c.text(
+                170,
+                y + 20,
+                "Reference: "
+                + (expected.get("switch") or expected.get("chassis_id", "")),
+                9,
+                "#b91c1c",
+            )
+        c.text(
+            44,
+            y,
+            port["interface"],
+            14,
+            "#b91c1c" if port["interface"] in differences else "#172b4d",
+            weight=600,
+        )
         c.text(44, y + 20, port["operstate"].upper() + "  " + speed, 11, "#64748b")
         if not port["neighbors"]:
             c.text(
@@ -299,6 +350,8 @@ def node_diagram(node, devices=None, colors=None):
 
 
 def document(report):
+    if "wiring_check" not in report:
+        report = analyze(report)
     devices = peers(report)
     colors = {key: COLORS[i % len(COLORS)] for i, key in enumerate(sorted(devices))}
     out = [
@@ -318,6 +371,7 @@ p{line-height:1.6;color:#64748b}a{color:inherit}
 </style>""",
         '<header><b>ETHERLINK</b><input id="search" placeholder="Search node / interface / switch / model" aria-label="Search"><span id="count"></span></header><main>',
         overview(report),
+        html_summary(report),
         "<h2>Exact port wiring</h2><p>Click a node above or expand a row below. Blank switch fields mean no LLDP neighbor was observed, not a disconnected cable.</p>",
     ]
     fields = (

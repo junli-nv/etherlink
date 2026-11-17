@@ -108,7 +108,19 @@
         }
       ],
       "lldp_status": "ok",
-      "errors": []
+      "errors": [],
+      "wiring": {
+        "group": "group-002",
+        "status": "consistent",
+        "differences": [],
+        "reasons": [],
+        "interfaces": [
+          "eth0",
+          "eth1",
+          "eth2",
+          "eth3"
+        ]
+      }
     },
     {
       "node": "node02",
@@ -216,7 +228,19 @@
         }
       ],
       "lldp_status": "ok",
-      "errors": []
+      "errors": [],
+      "wiring": {
+        "group": "group-002",
+        "status": "consistent",
+        "differences": [],
+        "reasons": [],
+        "interfaces": [
+          "eth0",
+          "eth1",
+          "eth2",
+          "eth3"
+        ]
+      }
     },
     {
       "node": "node03",
@@ -324,7 +348,19 @@
         }
       ],
       "lldp_status": "ok",
-      "errors": []
+      "errors": [],
+      "wiring": {
+        "group": "group-002",
+        "status": "consistent",
+        "differences": [],
+        "reasons": [],
+        "interfaces": [
+          "eth0",
+          "eth1",
+          "eth2",
+          "eth3"
+        ]
+      }
     },
     {
       "node": "node04",
@@ -341,10 +377,10 @@
           "is_vf": false,
           "neighbors": [
             {
-              "switch": "example-leaf-1-1",
-              "chassis_id": "02:00:00:00:00:01",
+              "switch": "example-leaf-1-2",
+              "chassis_id": "02:00:00:00:00:02",
               "management_ips": [
-                "192.0.2.1"
+                "192.0.2.2"
               ],
               "port": "Ethernet1/7"
             }
@@ -366,10 +402,10 @@
           "is_vf": false,
           "neighbors": [
             {
-              "switch": "example-leaf-1-2",
-              "chassis_id": "02:00:00:00:00:02",
+              "switch": "example-leaf-1-1",
+              "chassis_id": "02:00:00:00:00:01",
               "management_ips": [
-                "192.0.2.2"
+                "192.0.2.1"
               ],
               "port": "Ethernet1/7"
             }
@@ -432,7 +468,42 @@
         }
       ],
       "lldp_status": "ok",
-      "errors": []
+      "errors": [],
+      "wiring": {
+        "group": "group-002",
+        "status": "mismatch",
+        "differences": [
+          {
+            "interface": "eth0",
+            "expected": {
+              "switch": "example-leaf-1-1",
+              "chassis_id": "02:00:00:00:00:01"
+            },
+            "actual": {
+              "switch": "example-leaf-1-2",
+              "chassis_id": "02:00:00:00:00:02"
+            }
+          },
+          {
+            "interface": "eth1",
+            "expected": {
+              "switch": "example-leaf-1-2",
+              "chassis_id": "02:00:00:00:00:02"
+            },
+            "actual": {
+              "switch": "example-leaf-1-1",
+              "chassis_id": "02:00:00:00:00:01"
+            }
+          }
+        ],
+        "reasons": [],
+        "interfaces": [
+          "eth0",
+          "eth1",
+          "eth2",
+          "eth3"
+        ]
+      }
     },
     {
       "node": "node05",
@@ -540,7 +611,19 @@
         }
       ],
       "lldp_status": "ok",
-      "errors": []
+      "errors": [],
+      "wiring": {
+        "group": "group-003",
+        "status": "consistent",
+        "differences": [],
+        "reasons": [],
+        "interfaces": [
+          "eth0",
+          "eth1",
+          "eth2",
+          "eth3"
+        ]
+      }
     },
     {
       "node": "node06",
@@ -648,7 +731,19 @@
         }
       ],
       "lldp_status": "ok",
-      "errors": []
+      "errors": [],
+      "wiring": {
+        "group": "group-003",
+        "status": "consistent",
+        "differences": [],
+        "reasons": [],
+        "interfaces": [
+          "eth0",
+          "eth1",
+          "eth2",
+          "eth3"
+        ]
+      }
     },
     {
       "node": "node07",
@@ -756,7 +851,19 @@
         }
       ],
       "lldp_status": "ok",
-      "errors": []
+      "errors": [],
+      "wiring": {
+        "group": "group-003",
+        "status": "consistent",
+        "differences": [],
+        "reasons": [],
+        "interfaces": [
+          "eth0",
+          "eth1",
+          "eth2",
+          "eth3"
+        ]
+      }
     },
     {
       "node": "node08",
@@ -864,7 +971,19 @@
         }
       ],
       "lldp_status": "ok",
-      "errors": []
+      "errors": [],
+      "wiring": {
+        "group": "group-003",
+        "status": "consistent",
+        "differences": [],
+        "reasons": [],
+        "interfaces": [
+          "eth0",
+          "eth1",
+          "eth2",
+          "eth3"
+        ]
+      }
     },
     {
       "node": "node09",
@@ -936,7 +1055,36 @@
         }
       ],
       "lldp_status": "ok",
-      "errors": []
+      "errors": [],
+      "wiring": {
+        "group": "group-001",
+        "status": "incomplete",
+        "differences": [],
+        "reasons": [
+          {
+            "interface": "eth0",
+            "reason": "UP interface without LLDP"
+          },
+          {
+            "interface": "eth1",
+            "reason": "link not UP; absent LLDP is normal for DOWN"
+          },
+          {
+            "interface": "eth2",
+            "reason": "link not UP; absent LLDP is normal for DOWN"
+          },
+          {
+            "interface": "eth3",
+            "reason": "link not UP; absent LLDP is normal for DOWN"
+          }
+        ],
+        "interfaces": [
+          "eth0",
+          "eth1",
+          "eth2",
+          "eth3"
+        ]
+      }
     },
     {
       "node": "node10",
@@ -1008,7 +1156,267 @@
         }
       ],
       "lldp_status": "ok",
-      "errors": []
+      "errors": [],
+      "wiring": {
+        "group": "group-001",
+        "status": "incomplete",
+        "differences": [],
+        "reasons": [
+          {
+            "interface": "eth0",
+            "reason": "UP interface without LLDP"
+          },
+          {
+            "interface": "eth1",
+            "reason": "link not UP; absent LLDP is normal for DOWN"
+          },
+          {
+            "interface": "eth2",
+            "reason": "link not UP; absent LLDP is normal for DOWN"
+          },
+          {
+            "interface": "eth3",
+            "reason": "link not UP; absent LLDP is normal for DOWN"
+          }
+        ],
+        "interfaces": [
+          "eth0",
+          "eth1",
+          "eth2",
+          "eth3"
+        ]
+      }
     }
-  ]
+  ],
+  "wiring_check": {
+    "method": "Exact observed neighbor set; strict majority among complete nodes with the majority interface inventory",
+    "limits": "Consistency is not proof of correct cabling. Remote port numbers are not compared. Missing/DOWN ports do not vote.",
+    "summary": {
+      "groups": 3,
+      "consistent": 7,
+      "mismatch": 1,
+      "incomplete": 2,
+      "inventory_mismatch": 0,
+      "ambiguous": 0,
+      "insufficient": 0
+    },
+    "groups": [
+      {
+        "id": "group-001",
+        "switches": [],
+        "nodes": [
+          "node09",
+          "node10"
+        ],
+        "reference_status": "insufficient",
+        "reference_votes": 0,
+        "comparable_nodes": 0,
+        "reference": [],
+        "patterns": [],
+        "interface_sets": [],
+        "counts": {
+          "incomplete": 2
+        },
+        "status": "incomplete"
+      },
+      {
+        "id": "group-002",
+        "switches": [
+          {
+            "switch": "example-leaf-1-1",
+            "chassis_id": "02:00:00:00:00:01"
+          },
+          {
+            "switch": "example-leaf-1-2",
+            "chassis_id": "02:00:00:00:00:02"
+          }
+        ],
+        "nodes": [
+          "node01",
+          "node02",
+          "node03",
+          "node04"
+        ],
+        "reference_status": "majority",
+        "reference_votes": 3,
+        "comparable_nodes": 4,
+        "reference": [
+          {
+            "interface": "eth0",
+            "switch": "example-leaf-1-1",
+            "chassis_id": "02:00:00:00:00:01"
+          },
+          {
+            "interface": "eth1",
+            "switch": "example-leaf-1-2",
+            "chassis_id": "02:00:00:00:00:02"
+          },
+          {
+            "interface": "eth2",
+            "switch": "example-leaf-1-1",
+            "chassis_id": "02:00:00:00:00:01"
+          },
+          {
+            "interface": "eth3",
+            "switch": "example-leaf-1-2",
+            "chassis_id": "02:00:00:00:00:02"
+          }
+        ],
+        "patterns": [
+          {
+            "count": 3,
+            "mapping": [
+              {
+                "interface": "eth0",
+                "switch": "example-leaf-1-1",
+                "chassis_id": "02:00:00:00:00:01"
+              },
+              {
+                "interface": "eth1",
+                "switch": "example-leaf-1-2",
+                "chassis_id": "02:00:00:00:00:02"
+              },
+              {
+                "interface": "eth2",
+                "switch": "example-leaf-1-1",
+                "chassis_id": "02:00:00:00:00:01"
+              },
+              {
+                "interface": "eth3",
+                "switch": "example-leaf-1-2",
+                "chassis_id": "02:00:00:00:00:02"
+              }
+            ]
+          },
+          {
+            "count": 1,
+            "mapping": [
+              {
+                "interface": "eth0",
+                "switch": "example-leaf-1-2",
+                "chassis_id": "02:00:00:00:00:02"
+              },
+              {
+                "interface": "eth1",
+                "switch": "example-leaf-1-1",
+                "chassis_id": "02:00:00:00:00:01"
+              },
+              {
+                "interface": "eth2",
+                "switch": "example-leaf-1-1",
+                "chassis_id": "02:00:00:00:00:01"
+              },
+              {
+                "interface": "eth3",
+                "switch": "example-leaf-1-2",
+                "chassis_id": "02:00:00:00:00:02"
+              }
+            ]
+          }
+        ],
+        "interface_sets": [
+          {
+            "interfaces": [
+              "eth0",
+              "eth1",
+              "eth2",
+              "eth3"
+            ],
+            "count": 4
+          }
+        ],
+        "counts": {
+          "consistent": 3,
+          "mismatch": 1
+        },
+        "status": "mismatch"
+      },
+      {
+        "id": "group-003",
+        "switches": [
+          {
+            "switch": "example-leaf-2-1",
+            "chassis_id": "02:00:00:00:01:01"
+          },
+          {
+            "switch": "example-leaf-2-2",
+            "chassis_id": "02:00:00:00:01:02"
+          }
+        ],
+        "nodes": [
+          "node05",
+          "node06",
+          "node07",
+          "node08"
+        ],
+        "reference_status": "majority",
+        "reference_votes": 4,
+        "comparable_nodes": 4,
+        "reference": [
+          {
+            "interface": "eth0",
+            "switch": "example-leaf-2-1",
+            "chassis_id": "02:00:00:00:01:01"
+          },
+          {
+            "interface": "eth1",
+            "switch": "example-leaf-2-2",
+            "chassis_id": "02:00:00:00:01:02"
+          },
+          {
+            "interface": "eth2",
+            "switch": "example-leaf-2-1",
+            "chassis_id": "02:00:00:00:01:01"
+          },
+          {
+            "interface": "eth3",
+            "switch": "example-leaf-2-2",
+            "chassis_id": "02:00:00:00:01:02"
+          }
+        ],
+        "patterns": [
+          {
+            "count": 4,
+            "mapping": [
+              {
+                "interface": "eth0",
+                "switch": "example-leaf-2-1",
+                "chassis_id": "02:00:00:00:01:01"
+              },
+              {
+                "interface": "eth1",
+                "switch": "example-leaf-2-2",
+                "chassis_id": "02:00:00:00:01:02"
+              },
+              {
+                "interface": "eth2",
+                "switch": "example-leaf-2-1",
+                "chassis_id": "02:00:00:00:01:01"
+              },
+              {
+                "interface": "eth3",
+                "switch": "example-leaf-2-2",
+                "chassis_id": "02:00:00:00:01:02"
+              }
+            ]
+          }
+        ],
+        "interface_sets": [
+          {
+            "interfaces": [
+              "eth0",
+              "eth1",
+              "eth2",
+              "eth3"
+            ],
+            "count": 4
+          }
+        ],
+        "counts": {
+          "consistent": 4
+        },
+        "status": "consistent"
+      }
+    ]
+  }
 }

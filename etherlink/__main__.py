@@ -6,12 +6,24 @@ from .collector import scan
 from .hosts import expand
 from .selection import select, vendor_ids
 from .recovery import recover
+from .consistency import analyze
 from .render import console, svg, write_csv
 
 
 def main(argv=None):
     p = argparse.ArgumentParser(
-        description="Linux Ethernet / LLDP topology; one automatic LLDP restart for UP physical ports lacking neighbors."
+        formatter_class=argparse.RawDescriptionHelpFormatter,
+        description="""Ethernet topology and same-group wiring consistency check.
+
+Quick start:
+  ./etherlink-cli 'node[01-08]'
+  ./etherlink-cli 'node[01-08]' --html topology.html
+
+Defaults: Mellanox NICs; automatic wiring checks; one LLDP recovery when needed.
+LLDP recovery is limited to one restart, a 5-second wait and one recheck.""",
+        epilog="""Optional: --vendor all includes every NIC vendor.
+Save data: --json links.json
+Offline: ./etherlink-cli --input links.json --html topology.html""",
     )
     p.add_argument(
         "nodes",
@@ -103,7 +115,7 @@ def main(argv=None):
                 include_virtual=args.include_virtual,
                 sudo=args.sudo,
             )
-        report = select(report, args.vendor, args.driver)
+        report = analyze(select(report, args.vendor, args.driver))
         if args.html:
             from .atlas import document
 

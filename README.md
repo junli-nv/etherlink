@@ -4,23 +4,20 @@ Linux 以太网口与 LLDP 拓扑工具，Python 3.9+ 标准库实现，无 pip 
 控制端需要 OpenSSH；节点需要 Python 3.9+、已有 lldpd 服务和可访问的 lldpcli。
 默认选择 Mellanox 网卡（PCI 0x15b3）。不安装软件、不改网卡或交换机配置；UP 物理口无 LLDP 时默认自动尝试一次服务恢复。
 
-## 拓扑采集
+## 最简单的用法
 
 ```bash
 cd /home/cmsupport/workspace/etherlink
-./etherlink-cli local
-./etherlink-cli 'node[001-016,021],gpu[01-04]'
-./etherlink-cli 'rack[1-2]node[01-04]' --workers 8 --timeout 25
-./etherlink-cli --nodes-file nodes.txt --json links.json --csv links.csv --svg topology.svg
-./etherlink-cli --input links.json --svg topology.svg
-./etherlink-cli --help
+./etherlink-cli 'node[01-08]'
+./etherlink-cli 'node[01-08]' --html topology.html
 ```
 
-集合加引号。节点文件每行一个名字或集合，支持空行和 # 注释。
-支持数字范围、枚举、多组括号和前导零；不支持嵌套、步长和完整 Slurm 语法。
-默认最多展开 4096 个输入节点（--limit 可调），展开后去重，不依赖 Slurm。
-SSH 复用 ~/.ssh/config，不交互询问密码、不关闭主机密钥校验。
-local 表示本机；--sudo 仅对 lldpcli 使用 sudo -n。
+第一条查看控制台，第二条另存可交互报告。默认选择 Mellanox，自动执行必要的一次 LLDP
+恢复和同组接法检查；无需重复指定默认参数。其他参数见 ./etherlink-cli --help。
+
+集合加引号，支持范围、枚举和多组括号；默认最多展开 4096 个节点，展开后去重。
+--nodes-file 每行接受一个名字或集合，允许空行和 # 注释。
+SSH 复用已有配置，不交互询问密码、不关闭主机密钥校验。local 表示本机。
 
 ## 独立名字工具
 
@@ -120,3 +117,23 @@ JSON 的 lldp_recovery 保存操作结果和恢复前后的缺失网口。
 单节点图逐口显示 UP/DOWN 和速率；DOWN 以灰色标注，LLDP 空值注明正常。
 UP 但无邻居以黄色提示。本地网口按自然顺序固定排列，例如 eth1、eth2、eth10；
 没有邻居的网口也保留原位置，右侧连线跟随该位置，总览的分组方式不变。
+
+## 同组接法一致性
+
+默认检查，不用额外开关。依据所选网口实际观察到的交换机身份集合分组，比较
+“本地网口名 → 交换机”，不要求不同节点的交换机端口号相同。
+优先使用 Chassis ID 区分交换机，不仅看系统名称。
+
+网口名称和数量相同、链路及 LLDP 完整的节点参与投票。
+只有超过半数且至少两台支持的模式才作为参考；并列或仅有一台时明确标记参考不足。
+网口配置不同单列；DOWN、LLDP 缺失、多邻居及采集错误归为信息不完整，不当成接错。
+
+控制台显示参考和逐口差异；HTML 增加差异表，总览标红不一致节点，明细标红对应网口。
+JSON 保存 wiring_check 和每台 wiring；CSV 增加 wiring_group、wiring_status、
+expected_switch 和 expected_chassis_id，后两列在差异网口填写参考身份。
+采集退出码规则不变；自动化可读取 wiring_check.summary.mismatch。
+
+一致不等于布线一定正确，组内多数不是预先批准的接线规范。
+观察到的交换机集合不同就分组检查，不猜测节点本来属于哪组；
+把线接到别组交换机的情况可能表现为新组或参考不足，需要结合预期拓扑复核。
+网口命名不同也不会按位置强行匹配。离线输入同样支持检查，始终不访问节点。

@@ -47,9 +47,9 @@
 <text x="341" y="522" font-size="10" fill="#2563eb" font-weight="400">4/4 LLDP | 4 UP</text>
 </a>
 <a href="#node-node04">
-<rect x="472" y="486" width="128" height="46" rx="7" fill="#f8fafc" stroke="#e2e8f0"/>
+<rect x="472" y="486" width="128" height="46" rx="7" fill="#fff1f2" stroke="#e2e8f0"/>
 <text x="481" y="505" font-size="12" fill="#172b4d" font-weight="700">node04</text>
-<text x="481" y="522" font-size="10" fill="#2563eb" font-weight="400">4/4 LLDP | 4 UP</text>
+<text x="481" y="522" font-size="10" fill="#b91c1c" font-weight="400">WIRING DIFFERENT</text>
 </a>
 <rect x="808" y="246" width="744" height="318" rx="12" fill="white" stroke="#dbe3ef"/>
 <text x="828" y="278" font-size="18" fill="#172b4d" font-weight="700">Neighbor group / 2 devices</text>
@@ -101,5 +101,5 @@
 <text x="201" y="772" font-size="10" fill="#d97706" font-weight="400">0/4 LLDP | 1 UP</text>
 </a>
 <text x="32" y="860" font-size="13" fill="#64748b" font-weight="400">Only observed LLDP is drawn. Group lines are aggregated; no switch-to-switch links are inferred.</text>
-<text x="32" y="884" font-size="12" fill="#64748b" font-weight="400">PCI vendor selection: all</text>
+<text x="32" y="884" font-size="12" fill="#64748b" font-weight="400">PCI vendor selection: all | Wiring: 7 consistent, 1 different</text>
 </g></svg>

@@ -19,6 +19,25 @@ def rows(report):
                 yield {
                     "node": node["node"],
                     "hostname": node["hostname"],
+                    "wiring_group": node.get("wiring", {}).get("group", ""),
+                    "wiring_status": node.get("wiring", {}).get("status", ""),
+                    "expected_chassis_id": next(
+                        (
+                            d["expected"].get("chassis_id", "")
+                            for d in node.get("wiring", {}).get("differences", [])
+                            if d["interface"] == port["interface"]
+                        ),
+                        "",
+                    ),
+                    "expected_switch": next(
+                        (
+                            d["expected"].get("switch")
+                            or d["expected"].get("chassis_id", "")
+                            for d in node.get("wiring", {}).get("differences", [])
+                            if d["interface"] == port["interface"]
+                        ),
+                        "",
+                    ),
                     "interface": port["interface"],
                     "mac": port["mac"],
                     **{
@@ -57,13 +76,17 @@ def identity(row):
 
 
 def console(report):
+    from .consistency import analyze, text_summary
+
+    if "wiring_check" not in report:
+        report = analyze(report)
     groups, missing = defaultdict(list), []
     for row in rows(report):
         if row["switch"] or row["chassis_id"]:
             groups[identity(row)].append(row)
         else:
             missing.append(row)
-    lines = ["Etherlink | " + report["collected_at"]]
+    lines = ["Etherlink | " + report["collected_at"], text_summary(report)]
     for key in sorted(groups):
         group = groups[key]
         first = group[0]
@@ -133,6 +156,10 @@ def write_csv(report, path):
     fields = [
         "node",
         "hostname",
+        "wiring_group",
+        "wiring_status",
+        "expected_switch",
+        "expected_chassis_id",
         "interface",
         "mac",
         "vendor_id",
