@@ -256,7 +256,11 @@ def node_diagram(node, devices=None, colors=None):
     c.text(44, 116, "LOCAL PHYSICAL PORT / LINK STATE", 12, "#64748b", 700)
     for port in ports:
         y = source_y[port["interface"]]
-        speed = str(port["speed_mbps"] // 1000) + "G" if port["speed_mbps"] else "?"
+        speed = (
+            str(port["speed_mbps"] // 1000) + "G"
+            if port["speed_mbps"]
+            else "speed unknown"
+        )
         c.text(44, y, port["interface"], 14, weight=600)
         c.text(44, y + 20, port["operstate"].upper() + "  " + speed, 11, "#64748b")
         if not port["neighbors"]:

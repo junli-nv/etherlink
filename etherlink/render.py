@@ -4,7 +4,7 @@ from collections import defaultdict
 
 
 def clean(value):
-    return re.sub(r"[\x00-\x1f\x7f-\x9f]", " ", str(value or ""))
+    return re.sub(r"[\x00-\x1f\x7f-\x9f]", " ", str("" if value is None else value))
 
 
 def rows(report):

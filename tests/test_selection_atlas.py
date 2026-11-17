@@ -103,3 +103,12 @@ class AtlasTests(unittest.TestCase):
         self.assertNotIn("<script>bad</script>", html)
         self.assertIn('id="search"', html)
         self.assertIn("<details", html)
+
+
+class ZeroCountTests(unittest.TestCase):
+    def test_zero_metrics_are_visible(self):
+        root = ET.fromstring(overview(mixed()))
+        texts = [
+            node.text for node in root.findall(".//{http://www.w3.org/2000/svg}text")
+        ]
+        self.assertGreaterEqual(texts.count("0"), 2)
