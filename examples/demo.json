@@ -1,0 +1,73 @@
+{
+  "schema_version": 1,
+  "collected_at": "Synthetic example (not live infrastructure)",
+  "nodes": [
+    {
+      "node": "n01",
+      "hostname": "n01",
+      "ports": [
+        {
+          "interface": "eth0",
+          "mac": "00:11:22:33:44:55",
+          "operstate": "up",
+          "carrier": "1",
+          "speed_mbps": 25000,
+          "master": "",
+          "device": "0000:01:00.0",
+          "is_vf": false,
+          "neighbors": [
+            {
+              "switch": "switch-a",
+              "chassis_id": "02:00:00:00:00:01",
+              "port": "Ethernet1/1",
+              "management_ips": [
+                "192.0.2.1"
+              ]
+            }
+          ]
+        }
+      ],
+      "lldp_status": "ok",
+      "errors": []
+    },
+    {
+      "node": "n02",
+      "hostname": "n02",
+      "ports": [
+        {
+          "interface": "eth0",
+          "mac": "00:11:22:33:44:55",
+          "operstate": "up",
+          "carrier": "1",
+          "speed_mbps": 25000,
+          "master": "",
+          "device": "0000:01:00.0",
+          "is_vf": false,
+          "neighbors": [
+            {
+              "switch": "switch-a",
+              "chassis_id": "02:00:00:00:00:01",
+              "port": "Ethernet1/2",
+              "management_ips": [
+                "192.0.2.1"
+              ]
+            }
+          ]
+        },
+        {
+          "interface": "eth1",
+          "mac": "00:11:22:33:44:55",
+          "operstate": "down",
+          "carrier": "0",
+          "speed_mbps": null,
+          "master": "",
+          "device": "0000:01:00.0",
+          "is_vf": false,
+          "neighbors": []
+        }
+      ],
+      "lldp_status": "ok",
+      "errors": []
+    }
+  ]
+}

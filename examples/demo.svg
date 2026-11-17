@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1310" height="446" viewBox="0 0 1310 446">
+<rect width="100%" height="100%" fill="white"/>
+<g font-family="monospace" font-size="13">
+<text x="20" y="28" fill="#16263b">Etherlink — Ethernet / LLDP topology</text>
+<text x="20" y="50" fill="#16263b">Synthetic example (not live infrastructure) | empty LLDP does not mean unplugged</text>
+<text x="20" y="78" fill="#16263b">Advertised neighbors</text>
+<text x="850" y="78" fill="#16263b">Nodes / Ethernet interfaces</text>
+<path d="M450,178 C590,178 710,178 850,178" fill="none" stroke="#27834a" stroke-width="1.5"/>
+<path d="M450,210 C590,210 710,310 850,310" fill="none" stroke="#27834a" stroke-width="1.5"/>
+<rect x="20" y="100" width="430" height="134" rx="8" fill="#e6f1ff" stroke="#94a6b8"/>
+<text x="32" y="124" fill="#16263b">switch-a</text>
+<text x="32" y="148" fill="#16263b">02:00:00:00:00:01 192.0.2.1</text>
+<text x="32" y="182" fill="#16263b">Ethernet1/1</text>
+<text x="32" y="214" fill="#16263b">Ethernet1/2</text>
+<rect x="850" y="100" width="430" height="102" rx="8" fill="#eef8ef" stroke="#94a6b8"/>
+<text x="862" y="124" fill="#16263b">n01</text>
+<text x="862" y="148" fill="#16263b">n01</text>
+<text x="862" y="182" fill="#16263b">eth0 [up 25000Mb/s]</text>
+<rect x="850" y="232" width="430" height="134" rx="8" fill="#eef8ef" stroke="#94a6b8"/>
+<text x="862" y="256" fill="#16263b">n02</text>
+<text x="862" y="280" fill="#16263b">n02</text>
+<text x="862" y="314" fill="#16263b">eth0 [up 25000Mb/s]</text>
+<text x="862" y="346" fill="#16263b">eth1 [down speed=?] LLDP: empty</text>
+</g></svg>
