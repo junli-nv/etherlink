@@ -2,6 +2,7 @@
 
 import copy
 from collections import Counter, defaultdict
+from .port_slots import MIN_SUPPORT_PERCENT, MIN_VOTES, assess as assess_port_slots
 from .render import identity, clean
 
 
@@ -73,6 +74,7 @@ def majority(counter):
 
 def analyze(report):
     output = copy.deepcopy(report)
+    slot_checks = assess_port_slots(output["nodes"])
     labels = {}
     groups = defaultdict(list)
     for node in output["nodes"]:
@@ -154,6 +156,17 @@ def analyze(report):
                     for port, key in expected.items()
                     if actual[port] != key
                 ]
+            slot_check = slot_checks.get(entry["node"])
+            if slot_check:
+                item["slot_reference"] = {
+                    "votes": slot_check["votes"],
+                    "comparable_nodes": slot_check["comparable_nodes"],
+                }
+                diagnosed = {diff["interface"] for diff in item["differences"]}
+                for diff in slot_check["differences"]:
+                    if diff["interface"] not in diagnosed:
+                        item["differences"].append(diff)
+                        item["status"] = "mismatch"
             assessments[entry["node"]] = item
         states = Counter(assessments[p["node"]]["status"] for p in entries)
         group["counts"] = dict(states)
@@ -177,9 +190,15 @@ def analyze(report):
     counts = Counter(item["status"] for item in assessments.values())
     output["wiring_check"] = {
         "method": "Exact observed neighbor set; strict majority among complete nodes with the majority interface inventory",
-        "limits": "Consistency is not proof of correct cabling. Remote port numbers are not compared. Missing/DOWN ports do not vote.",
+        "limits": (
+            f"Slot references use complete dual links and require {MIN_VOTES} votes and "
+            f"{MIN_SUPPORT_PERCENT}% support within a rack and switch pair. "
+            "Inferred differences require cabling verification."
+        ),
         "summary": {
             "groups": len(results),
+            "slot_checked": len(slot_checks),
+            "slot_mismatch": sum(bool(check["differences"]) for check in slot_checks.values()),
             **{
                 s: counts[s]
                 for s in (
@@ -205,6 +224,19 @@ def switch_label(device):
         if name and chassis
         else name or chassis or "(unknown)"
     )
+
+
+def endpoint_label(endpoint):
+    switch = switch_label(endpoint)
+    port = endpoint.get("port")
+    return f"{switch} / {port}" if port else switch
+
+
+def _slot_note(diff, wiring):
+    if diff.get("kind") != "port_slot":
+        return ""
+    reference = wiring["slot_reference"]
+    return f" (inferred slot, {reference['votes']}/{reference['comparable_nodes']} nodes)"
 
 
 def text_summary(report):
@@ -250,9 +282,10 @@ def text_summary(report):
                 "    "
                 + clean(diff["interface"])
                 + ": expected "
-                + clean(switch_label(diff["expected"]))
+                + clean(endpoint_label(diff["expected"]))
+                + _slot_note(diff, wiring)
                 + "; observed "
-                + clean(switch_label(diff["actual"]))
+                + clean(endpoint_label(diff["actual"]))
             )
         for reason in wiring["reasons"]:
             lines.append(
@@ -331,7 +364,11 @@ def html_summary(report):
             continue
         link = '<a href="#node-' + esc(node["node"]) + '">' + esc(node["node"]) + "</a>"
         records = [
-            (d["interface"], switch_label(d["expected"]), switch_label(d["actual"]))
+            (
+                d["interface"],
+                endpoint_label(d["expected"]) + _slot_note(d, item),
+                endpoint_label(d["actual"]),
+            )
             for d in item["differences"]
         ]
         records += [(r["interface"], "", r["reason"]) for r in item["reasons"]]
@@ -355,6 +392,6 @@ def html_summary(report):
                 + "</td></tr>"
             )
     parts.append(
-        "</table></div><p>Remote switch port numbers remain in node details and CSV. Different observed switch sets are separate groups; no intended group is guessed.</p></section>"
+        "</table></div><p>Inferred slot differences are reported with their reference votes. Different observed switch sets are checked separately.</p></section>"
     )
     return "\n".join(parts)

@@ -5,6 +5,9 @@ from concurrent.futures import ThreadPoolExecutor
 from pathlib import Path
 
 
+DEFAULT_WORKERS = 100
+
+
 def scan_one(host, timeout=25, include_virtual=False, sudo=False):
     script = Path(__file__).with_name("probe.py").read_text()
     flags = (["--include-virtual"] if include_virtual else []) + (
@@ -55,6 +58,6 @@ def scan_one(host, timeout=25, include_virtual=False, sudo=False):
         }
 
 
-def scan(hosts, workers=8, **kwargs):
+def scan(hosts, workers=DEFAULT_WORKERS, **kwargs):
     with ThreadPoolExecutor(max_workers=workers) as pool:
         return list(pool.map(lambda host: scan_one(host, **kwargs), hosts))

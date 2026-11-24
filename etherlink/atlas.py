@@ -301,7 +301,7 @@ def node_diagram(node, devices=None, colors=None):
                 170,
                 y + 20,
                 "Reference: "
-                + (expected.get("switch") or expected.get("chassis_id", "")),
+                + (expected.get("port") or expected.get("switch") or expected.get("chassis_id", "")),
                 9,
                 "#b91c1c",
             )

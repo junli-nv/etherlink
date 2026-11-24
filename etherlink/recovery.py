@@ -1,3 +1,4 @@
+from .collector import DEFAULT_WORKERS
 """One bounded LLDP restart per eligible node; never an open-ended retry."""
 
 import copy
@@ -69,7 +70,7 @@ def recover(
     report,
     vendors=None,
     drivers=None,
-    workers=8,
+    workers=DEFAULT_WORKERS,
     timeout=25,
     include_virtual=False,
     sudo=False,

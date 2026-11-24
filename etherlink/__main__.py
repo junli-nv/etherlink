@@ -2,7 +2,7 @@ import argparse
 import json
 from datetime import datetime, timezone
 from pathlib import Path
-from .collector import scan
+from .collector import DEFAULT_WORKERS, scan
 from .hosts import expand
 from .selection import select, vendor_ids
 from .recovery import recover
@@ -35,7 +35,10 @@ Offline: ./etherlink-cli --input links.json --html topology.html""",
     )
     p.add_argument("--input", type=Path, help="render a saved JSON report without SSH")
     p.add_argument("--limit", type=int, default=4096)
-    p.add_argument("--workers", type=int, default=8)
+    p.add_argument(
+        "--workers", type=int, default=DEFAULT_WORKERS,
+        help="parallel workers across nodes (default: %(default)s; range: 1..128)",
+    )
     p.add_argument(
         "--timeout", type=float, default=25, help="per-node total timeout in seconds"
     )

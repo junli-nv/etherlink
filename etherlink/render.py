@@ -9,35 +9,24 @@ def clean(value):
 
 def rows(report):
     for node in report["nodes"]:
+        wiring = node.get("wiring", {})
+        expected_by_port = {diff["interface"]: diff["expected"] for diff in wiring.get("differences", [])}
         for port in sorted(
             node["ports"],
             key=lambda p: [
                 int(v) if v.isdigit() else v for v in re.split(r"(\d+)", p["interface"])
             ],
         ):
+            expected = expected_by_port.get(port["interface"], {})
             for peer in port["neighbors"] or [{}]:
                 yield {
                     "node": node["node"],
                     "hostname": node["hostname"],
-                    "wiring_group": node.get("wiring", {}).get("group", ""),
-                    "wiring_status": node.get("wiring", {}).get("status", ""),
-                    "expected_chassis_id": next(
-                        (
-                            d["expected"].get("chassis_id", "")
-                            for d in node.get("wiring", {}).get("differences", [])
-                            if d["interface"] == port["interface"]
-                        ),
-                        "",
-                    ),
-                    "expected_switch": next(
-                        (
-                            d["expected"].get("switch")
-                            or d["expected"].get("chassis_id", "")
-                            for d in node.get("wiring", {}).get("differences", [])
-                            if d["interface"] == port["interface"]
-                        ),
-                        "",
-                    ),
+                    "wiring_group": wiring.get("group", ""),
+                    "wiring_status": wiring.get("status", ""),
+                    "expected_chassis_id": expected.get("chassis_id", ""),
+                    "expected_switch": expected.get("switch") or expected.get("chassis_id", ""),
+                    "expected_switch_port": expected.get("port", ""),
                     "interface": port["interface"],
                     "mac": port["mac"],
                     **{
@@ -160,6 +149,7 @@ def write_csv(report, path):
         "wiring_status",
         "expected_switch",
         "expected_chassis_id",
+        "expected_switch_port",
         "interface",
         "mac",
         "vendor_id",

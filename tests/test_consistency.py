@@ -112,6 +112,16 @@ class ConsistencyTests(unittest.TestCase):
         self.assertIn("etherlink-cli 'node[01-08]'", out.getvalue())
         self.assertNotIn("--workers 8", out.getvalue())
 
+    def test_default_workers_can_be_overridden(self):
+        from unittest.mock import patch
+
+        from etherlink.__main__ import main
+
+        for options, expected in (([], 100), (["--workers", "24"], 24)):
+            with patch("etherlink.__main__.scan", return_value=[]) as scan:
+                self.assertEqual(main(["local", "--quiet", "--no-restart-lldp", *options]), 0)
+                self.assertEqual(scan.call_args.kwargs["workers"], expected)
+
     def test_csv_retains_expected_identity(self):
         import csv
         import tempfile
